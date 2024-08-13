@@ -9,5 +9,6 @@ import { BannerComponent } from "../../components/banner/banner.component";
   styleUrl: './homepage.component.scss'
 })
 export class HomepageComponent {
+  
 
 }
