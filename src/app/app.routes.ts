@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
+import { HomepageComponent } from './page/homepage/homepage.component';
 import { HomeComponent } from './layout/home/home.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { OrderProductComponent } from './components/order-product/order-product.component';
 import { OrderComponent } from './components/order/order.component';
-import { HomepageComponent } from './page/homepage/homepage.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './page/login/login.component';
 import { RegisterComponent } from './page/register/register.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -24,11 +24,11 @@ export const routes: Routes = [
       },
 
       {
-        path: 'detail/:idPr',
+        path: 'product/:id',
         component: DetailProductComponent,
       },
       {
-        path: 'order_detail/:idPr',
+        path: 'order_confirm/:idPr',
         component: OrderProductComponent,
       },
       {
@@ -36,13 +36,13 @@ export const routes: Routes = [
         component: OrderComponent,
       },
       {
-        path: 'login',
+        path: "login",
         component: LoginComponent,
+      },{
+        path:"register",
+        component:RegisterComponent
       },
-      {
-        path: 'register',
-        component: RegisterComponent,
-      },
+
     ],
   },
   {

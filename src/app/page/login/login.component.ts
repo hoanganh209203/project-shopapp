@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
       phone_number: this.loginForm.value.phoneNumber,
       password: this.loginForm.value.password,
     };
-debugger
+//debugger
     this.userService.login(loginType).subscribe({
       next: (response: LoginResponse) => {
         //Muốn sử dụng token trong các yêu cầu API
-        debugger
+        //debugger
         console.log('Login successful!');
         let token = response.token;
         this.tokenService.setToken(token)
@@ -54,11 +54,11 @@ debugger
         this.router.navigate(['home']);
       },
       complete: () => {
-        debugger
+        //debugger
         console.log('Login process completed.');
       },
       error: (error: any) => {
-        debugger
+       // debugger
         console.log(`Cannot login, error: ${error}`);
       },
     });
