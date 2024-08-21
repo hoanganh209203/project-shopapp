@@ -9,11 +9,12 @@ import { environment } from '../../environments/environment';
 import { log } from 'console';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgStyle } from '@angular/common';
+import { CartService } from '../../service/carts/cart.service';
 
 @Component({
   selector: 'app-detail-product',
   standalone: true,
-  imports: [FormsModule, NgClass, NgFor,NgStyle],
+  imports: [FormsModule, NgClass, NgFor, NgStyle],
   templateUrl: './detail-product.component.html',
   styleUrl: './detail-product.component.scss',
 })
@@ -23,14 +24,15 @@ export class DetailProductComponent implements OnInit {
   currentImageIndex: number = 0;
   quantity: number = 1;
   constructor(
-    private productService: ProductService
-  ) // private categoryService : CategoryService,
-  // private router : Router,
+    private productService: ProductService,
+    private cartService : CartService
+    // private categoryService : CategoryService,
+  ) // private router : Router,
   // private activatedRoute : ActivatedRoute,
   {}
 
   ngOnInit(): void {
-    const iParam = 4;
+    const iParam = 7;
     if (iParam !== null) {
       this.productId = +iParam;
     }
@@ -82,24 +84,37 @@ export class DetailProductComponent implements OnInit {
     this.currentImageIndex = index;
   }
 
-  increaseQuantity() {
+  increaseQuantity():void {
     this.quantity++;
   }
 
-  decreaseQuantity() {
+  decreaseQuantity():void {
     if (this.quantity > 1) {
       this.quantity--;
     }
   }
   nextImage(): void {
-    console.log('Current index before:', this.currentImageIndex);
+    //console.log('Current index before:', this.currentImageIndex);
     this.showImage(this.currentImageIndex + 1);
     console.log('Current index after:', this.currentImageIndex);
   }
 
   previousImage(): void {
-    console.log('Current index before:', this.currentImageIndex);
+    //console.log('Current index before:', this.currentImageIndex);
     this.showImage(this.currentImageIndex - 1);
     console.log('Current index after:', this.currentImageIndex);
   }
+
+
+  addToCart():void{
+
+    if(this.products){
+      this.cartService.addToCart(this.productId,this.quantity)
+    }else{
+      console.error("Không thể thêm sản phẩm vào giỏ hàng vì products là null");
+    }
+  }
+
+  buyNow():void{}
+  //Thực hiện khi người dùng bấm mua ngay
 }

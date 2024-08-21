@@ -9,6 +9,7 @@ import { CategoryResponse } from '../../interfaces/category.response';
 import { CategoryService } from '../../service/categories/category.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../service/carts/cart.service';
 
 @Component({
   selector: 'app-homepage',
@@ -27,10 +28,12 @@ export class HomepageComponent implements OnInit {
   totalPages: number = 0;
   visiblePages: number[] = [];
   keyword: string = '';
+  quantity: number = 1;
 
   constructor(
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private cartService : CartService
   ) {}
 
   ngOnInit() {
@@ -90,4 +93,9 @@ export class HomepageComponent implements OnInit {
 
     return new Array(endPage - startPage + 1).fill(0).map((_, index) => startPage + index);
   }
+
+
+
+
+
 }

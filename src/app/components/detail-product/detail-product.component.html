@@ -95,8 +95,12 @@
 
 
               <div class="flex flex-wrap gap-4 mt-8">
-                  <button type="button" class="min-w-[200px] px-4 py-3 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded">Buy now</button>
-                  <button type="button" class="min-w-[200px] px-4 py-2.5 border border-teal-600 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded">Add to cart</button>
+                  <button type="button"
+                  (click)="buyNow()"
+                  class="min-w-[200px] px-4 py-3 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded">Buy now</button>
+                  <button type="button"
+                  (click)="addToCart()"
+                  class="min-w-[200px] px-4 py-2.5 border border-teal-600 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded">Add to cart</button>
               </div>
           </div>
       </div>

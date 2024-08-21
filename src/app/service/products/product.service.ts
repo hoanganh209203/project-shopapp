@@ -30,4 +30,9 @@ export class ProductService {
   productDetail(productId : number){
     return this.http.get(`${this.apiProduct}/${productId}`)
   }
+
+  getProductsByIds(productIds : number[]) :Observable<ProductResponse[]>{
+    const params = new HttpParams().set('ids',productIds.join(','));
+    return this.http.get<ProductResponse[]>(`${this.apiProduct}/by-ids?${params}`);
+  }
 }

@@ -27,6 +27,7 @@ export const routes: Routes = [
         path: 'product/:id',
         component: DetailProductComponent,
       },
+
       {
         path: 'order_confirm/:idPr',
         component: OrderProductComponent,

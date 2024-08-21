@@ -8,9 +8,11 @@ import { tokenInterceptor } from './interceptors/tokens/token.interceptor';
 
 import { registerLocaleData } from '@angular/common';
 import uk from '@angular/common/locales/uk';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 
 registerLocaleData(uk);
@@ -23,8 +25,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     NgModel,
     NgModule,
+    NzDrawerModule, NzButtonModule,ReactiveFormsModule,
     { provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true },
     importProvidersFrom(FormsModule,NgModel), // Import các module của NG-ZORRO cần thiết
     provideAnimationsAsync()
-  ]
+  ],
+
 };
