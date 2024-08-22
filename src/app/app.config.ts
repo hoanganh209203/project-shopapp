@@ -1,19 +1,13 @@
-import { ApplicationConfig, importProvidersFrom, NgModule } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
+import { registerLocaleData } from '@angular/common';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import uk from '@angular/common/locales/uk';
+import { ApplicationConfig } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { provideToastr } from 'ngx-toastr';
+import { routes } from './app.routes';
 import { tokenInterceptor } from './interceptors/tokens/token.interceptor';
-
-import { registerLocaleData } from '@angular/common';
-import uk from '@angular/common/locales/uk';
-import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-
 
 registerLocaleData(uk);
 
@@ -22,13 +16,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideClientHydration(),
-    provideAnimations(),
-    NgModel,
-    NgModule,
-    NzDrawerModule, NzButtonModule,ReactiveFormsModule,
     { provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true },
-    importProvidersFrom(FormsModule,NgModel), // Import các module của NG-ZORRO cần thiết
-    provideAnimationsAsync()
+    provideAnimations(),
+    provideToastr(),
   ],
-
 };

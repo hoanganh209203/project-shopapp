@@ -37,7 +37,8 @@
             "styles": [
               "src/theme.less",
               "src/styles.scss",
-              "node_modules/swiper/swiper-bundle.min.css"
+              "node_modules/swiper/swiper-bundle.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -102,7 +103,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           }

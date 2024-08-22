@@ -1,64 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductResponse } from '../../interfaces/product.response';
 import { ProductService } from '../../service/products/product.service';
-import { CategoryService } from '../../service/categories/category.service';
-import { Router } from 'express';
-import { ActivatedRoute } from '@angular/router';
 import { ProductImage } from '../../interfaces/productImage';
 import { environment } from '../../environments/environment';
-import { log } from 'console';
 import { FormsModule } from '@angular/forms';
-import { NgClass, NgFor, NgStyle } from '@angular/common';
+import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { CartService } from '../../service/carts/cart.service';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-detail-product',
   standalone: true,
-  imports: [FormsModule, NgClass, NgFor, NgStyle],
+  imports: [FormsModule, NgClass, NgFor, NgStyle, NgIf, ToastrModule], // Import ToastrModule cho standalone component
   templateUrl: './detail-product.component.html',
-  styleUrl: './detail-product.component.scss',
+  styleUrls: ['./detail-product.component.scss'],
 })
 export class DetailProductComponent implements OnInit {
   products?: ProductResponse;
   productId: number = 0;
   currentImageIndex: number = 0;
   quantity: number = 1;
+  isLoading: boolean = false;
+
   constructor(
     private productService: ProductService,
-    private cartService : CartService
-    // private categoryService : CategoryService,
-  ) // private router : Router,
-  // private activatedRoute : ActivatedRoute,
-  {}
+    private cartService: CartService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    const iParam = 7;
+    this.isLoading = true;
+    const iParam = 8;
     if (iParam !== null) {
       this.productId = +iParam;
     }
 
-    console.log(this.productId);
-
     if (!isNaN(this.productId)) {
       this.productService.productDetail(this.productId).subscribe({
         next: (response: any) => {
+          this.isLoading = false; // tắt loading sau khi nhận dữ liệu
+          this.toastr.success('Product details loaded successfully'); // Toast thông báo thành công
           if (response.product_images && response.product_images.length > 0) {
             response.product_images.forEach((product_image: ProductImage) => {
-              // Kiểm tra nếu image_url đã chứa apiBaseUrl
               if (!product_image.image_url.startsWith(environment.apiBaseUrl)) {
                 product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
               }
             });
           } else {
+            this.isLoading = false;
+            this.toastr.error('Failed to load product details'); // Toast thông báo lỗi
             console.warn('product_image is not available or is empty');
           }
 
           this.products = response;
           this.showImage(0);
         },
-
-        complete: () => {},
         error: (err: any) => {
+          this.isLoading = false;
+          this.toastr.error('Error fetching product details'); // Thêm thông báo lỗi
           console.log('Error fetching detail ', err);
         },
       });
@@ -66,12 +65,9 @@ export class DetailProductComponent implements OnInit {
       console.log('Invalid productId: ', iParam);
     }
   }
+
   showImage(index: number) {
-    if (
-      this.products &&
-      this.products.product_images &&
-      this.products.product_images.length > 0
-    ) {
+    if (this.products?.product_images?.length) {
       if (index < 0) {
         index = 0;
       } else if (index >= this.products.product_images.length) {
@@ -80,41 +76,40 @@ export class DetailProductComponent implements OnInit {
       this.currentImageIndex = index;
     }
   }
+
   thumbnailClick(index: number) {
     this.currentImageIndex = index;
   }
 
-  increaseQuantity():void {
+  increaseQuantity(): void {
     this.quantity++;
   }
 
-  decreaseQuantity():void {
+  decreaseQuantity(): void {
     if (this.quantity > 1) {
       this.quantity--;
     }
   }
+
   nextImage(): void {
-    //console.log('Current index before:', this.currentImageIndex);
     this.showImage(this.currentImageIndex + 1);
-    console.log('Current index after:', this.currentImageIndex);
   }
 
   previousImage(): void {
-    //console.log('Current index before:', this.currentImageIndex);
     this.showImage(this.currentImageIndex - 1);
-    console.log('Current index after:', this.currentImageIndex);
   }
 
-
-  addToCart():void{
-
-    if(this.products){
-      this.cartService.addToCart(this.productId,this.quantity)
-    }else{
-      console.error("Không thể thêm sản phẩm vào giỏ hàng vì products là null");
+  addToCart(): void {
+    if (this.products) {
+      this.toastr.success('Product added to cart');
+      this.cartService.addToCart(this.productId, this.quantity);
+    } else {
+      this.toastr.error('Unable to add product to cart');
+      console.error('Không thể thêm sản phẩm vào giỏ hàng vì products là null');
     }
   }
 
-  buyNow():void{}
-  //Thực hiện khi người dùng bấm mua ngay
+  buyNow(): void {
+    this.toastr.info('Buying now...');
+  }
 }

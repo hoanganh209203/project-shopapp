@@ -7,6 +7,7 @@ import { OrderComponent } from './components/order/order.component';
 import { LoginComponent } from './page/login/login.component';
 import { RegisterComponent } from './page/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TestToastComponent } from './components/test-toast/test-toast.component';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,7 @@ export const routes: Routes = [
         component: OrderProductComponent,
       },
       {
-        path: 'order/:idPr',
+        path: 'order',
         component: OrderComponent,
       },
       {
@@ -43,6 +44,10 @@ export const routes: Routes = [
         path:"register",
         component:RegisterComponent
       },
+      {
+        path:"test",
+        component:TestToastComponent
+      }
 
     ],
   },
@@ -50,4 +55,5 @@ export const routes: Routes = [
     path: '**',
     component: NotFoundComponent,
   },
+
 ];
