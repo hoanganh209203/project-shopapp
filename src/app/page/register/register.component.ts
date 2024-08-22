@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { error } from 'console';
 import { UserService } from '../../service/auth/user.service';
 import { RegisterType } from '../../dtos/auth/register.dto';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -15,14 +16,17 @@ import { RegisterType } from '../../dtos/auth/register.dto';
 })
 export class RegisterComponent implements OnInit{
   registerForm!: FormGroup;
-
+  loginForm!: FormGroup;
+  isLoading: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
@@ -55,7 +59,9 @@ export class RegisterComponent implements OnInit{
 
     this.userService.register(registerType).subscribe({
       next: (response: any) => {
-        alert('Register successful!');
+        this.toastr.success('Register Successfully', 'Register',{
+          timeOut: 3000,
+         });
         this.router.navigate(['login']);
 
       },
@@ -63,7 +69,9 @@ export class RegisterComponent implements OnInit{
         console.log('Registration process completed.');
       },
       error: (error: any) => {
-        console.log(`Cannot register, error: ${error.error}`);
+        this.toastr.success(`Cannot register, error :${error.error}`, 'Register',{
+          timeOut: 3000,
+         });
       },
     });
   }

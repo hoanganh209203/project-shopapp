@@ -1,140 +1,146 @@
 <app-banner />
-<section>
-  <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-    <header class="flex justify-between items-center">
-      <div class="">
-        <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
-          Product Collection
-        </h2>
 
-        <p class="mt-4 max-w-md text-gray-500">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-          praesentium cumque iure dicta incidunt est ipsam, officia dolor fugit
-          natus?
-        </p>
-      </div>
-      <div class="flex justify-between items-center gap-3">
-        <div
-          class="flex px-4 py-3 rounded-md border-2 border-stone-200 overflow-hidden max-w-md mx-auto font-[sans-serif]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 192.904 192.904"
-            width="16px"
-            class="fill-gray-600 mr-3 rotate-90"
-          >
-            <path
-              d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"
-            ></path>
-          </svg>
-          <input
-            [(ngModel)]="keyword"
-            name="keyword"
-            type="search"
-            placeholder="Search Something..."
-            class="w-full bg-transparent text-gray-600 text-sm outline-none"
-          />
-        </div>
-        <!-- dropdown.component.html -->
-        <div class="relative font-[sans-serif] w-max mx-auto">
-          <div class="flex justify-center items-center gap-2">
-            <select
-              [(ngModel)]="selectedCategoryId"
-              class="block w-full px-4 py-3 border border-gray-300 bg-white text-gray-700 text-sm"
-            >
-              <option [value]="0">Tất cả</option>
-              <option *ngFor="let category of categories" [value]="category.id">
-                {{ category.name }}
-              </option>
-            </select>
-            <button
-              (click)="searchProducts()"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-3 w-36"
-            >
-              Tìm kiếm
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
+<div *ngIf="!isLoading">
+  <section>
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <header class="flex justify-between items-center">
+        <div class="">
+          <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
+            Product Collection
+          </h2>
 
-    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <li *ngFor="let product of products" class="relative group">
-        <a href="" class="block overflow-hidden relative">
-          <img
-            [src]="product.url"
-            alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-          />
-
-          <!-- Các nút Mua và Thêm vào giỏ hàng (chỉ hiện khi hover vào ảnh) -->
-          <div
-            class="absolute inset-0 flex items-end justify-between space-x-4 opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-in-out p-4"
-          >
-            <a href="/product/1" class="bg-blue-500 text-center text-white w-full py-2 px-4 rounded">Chi tiết</a>
-
-          </div>
-        </a>
-        <div class="relative bg-white pt-3">
-          <a href="">
-            <h3 class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-              {{ product.name }}
-            </h3>
-          </a>
-          <p class="mt-2">
-            <span class="sr-only"> Regular Price </span>
-            <span class="tracking-wider text-gray-900">$ {{ product.price }}</span>
+          <p class="mt-4 max-w-md text-gray-500">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
+            praesentium cumque iure dicta incidunt est ipsam, officia dolor fugit
+            natus?
           </p>
         </div>
-      </li>
+        <div class="flex justify-between items-center gap-3">
+          <div
+            class="flex px-4 py-3 rounded-md border-2 border-stone-200 overflow-hidden max-w-md mx-auto font-[sans-serif]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 192.904 192.904"
+              width="16px"
+              class="fill-gray-600 mr-3 rotate-90"
+            >
+              <path
+                d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"
+              ></path>
+            </svg>
+            <input
+              [(ngModel)]="keyword"
+              name="keyword"
+              type="search"
+              placeholder="Search Something..."
+              class="w-full bg-transparent text-gray-600 text-sm outline-none"
+            />
+          </div>
+          <!-- dropdown.component.html -->
+          <div class="relative font-[sans-serif] w-max mx-auto">
+            <div class="flex justify-center items-center gap-2">
+              <select
+                [(ngModel)]="selectedCategoryId"
+                class="block w-full px-4 py-3 border border-gray-300 bg-white text-gray-700 text-sm"
+              >
+                <option [value]="0">Tất cả</option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                  {{ category.name }}
+                </option>
+              </select>
+              <button
+                (click)="searchProducts()"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-3 w-36"
+              >
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <li *ngFor="let product of products" class="relative group">
+          <a href="" class="block overflow-hidden relative">
+            <img
+              [src]="product.url"
+              alt=""
+              class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+            />
+
+            <!-- Các nút Mua và Thêm vào giỏ hàng (chỉ hiện khi hover vào ảnh) -->
+            <div
+              class="absolute inset-0 flex items-end justify-between space-x-4 opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-in-out p-4"
+            >
+              <a href="/product/1" class="bg-blue-500 text-center text-white w-full py-2 px-4 rounded">Chi tiết</a>
+
+            </div>
+          </a>
+          <div class="relative bg-white pt-3">
+            <a href="">
+              <h3 class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                {{ product.name }}
+              </h3>
+            </a>
+            <p class="mt-2">
+              <span class="sr-only"> Regular Price </span>
+              <span class="tracking-wider text-gray-900">$ {{ product.price }}</span>
+            </p>
+          </div>
+        </li>
 
 
-    </ul>
-    <div class="flex justify-center items-center p-10">
-      <ul class="pagination flex items-center space-x-2">
-        <li *ngIf="currentPage > 1">
-          <a
-            href="#"
-            (click)="onPageChange(1, $event)"
-            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
-            >First</a
-          >
-        </li>
-        <li *ngIf="currentPage > 1">
-          <a
-            href="#"
-            (click)="onPageChange(currentPage - 1, $event)"
-            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
-            >Previous</a
-          >
-        </li>
-        <ng-container *ngFor="let page of visiblePages">
-          <li [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }">
+      </ul>
+      <div class="flex justify-center items-center p-10">
+        <ul class="pagination flex items-center space-x-2">
+          <li *ngIf="currentPage > 1">
             <a
               href="#"
-              (click)="onPageChange(page, $event)"
-              class="page-link px-3 py-1 rounded"
-              >{{ page }}</a
+              (click)="onPageChange(1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >First</a
             >
           </li>
-        </ng-container>
-        <li *ngIf="currentPage < totalPages">
-          <a
-            href="#"
-            (click)="onPageChange(currentPage + 1, $event)"
-            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
-            >Next</a
-          >
-        </li>
-        <li *ngIf="currentPage < totalPages">
-          <a
-            href="#"
-            (click)="onPageChange(totalPages, $event)"
-            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
-            >Last</a
-          >
-        </li>
-      </ul>
+          <li *ngIf="currentPage > 1">
+            <a
+              href="#"
+              (click)="onPageChange(currentPage - 1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Previous</a
+            >
+          </li>
+          <ng-container *ngFor="let page of visiblePages">
+            <li [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }">
+              <a
+                href="#"
+                (click)="onPageChange(page, $event)"
+                class="page-link px-3 py-1 rounded"
+                >{{ page }}</a
+              >
+            </li>
+          </ng-container>
+          <li *ngIf="currentPage < totalPages">
+            <a
+              href="#"
+              (click)="onPageChange(currentPage + 1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Next</a
+            >
+          </li>
+          <li *ngIf="currentPage < totalPages">
+            <a
+              href="#"
+              (click)="onPageChange(totalPages, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Last</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

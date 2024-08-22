@@ -101,7 +101,9 @@ export class DetailProductComponent implements OnInit {
 
   addToCart(): void {
     if (this.products) {
-      this.toastr.success('Product added to cart');
+      this.toastr.success('Product added to cart', 'Add To Cart',{
+        timeOut: 3000,
+       });
       this.cartService.addToCart(this.productId, this.quantity);
     } else {
       this.toastr.error('Unable to add product to cart');

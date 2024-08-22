@@ -15,7 +15,9 @@ export class TestToastComponent {
 
   showSuccess(){
     debugger
-   this.toastr.success('everything is broken', 'Major Error');
+   this.toastr.success('everything is broken', 'Major Error',{
+    timeOut: 3000,
+   });
   }
   showError(){
    this.toastr.error('everything is broken', 'Major Error', {

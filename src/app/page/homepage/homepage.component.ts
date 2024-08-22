@@ -10,11 +10,19 @@ import { CategoryService } from '../../service/categories/category.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../service/carts/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [BannerComponent, NgFor, NzPaginationModule, NgIf, NgClass, FormsModule],
+  imports: [
+    BannerComponent,
+    NgFor,
+    NzPaginationModule,
+    NgIf,
+    NgClass,
+    FormsModule,
+  ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
 })
@@ -29,15 +37,21 @@ export class HomepageComponent implements OnInit {
   visiblePages: number[] = [];
   keyword: string = '';
   quantity: number = 1;
-
+  isLoading: boolean = false;
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private cartService : CartService
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
-    this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+    this.isLoading = true;
+    this.getProducts(
+      this.keyword,
+      this.selectedCategoryId,
+      this.currentPage,
+      this.itemsPerPage
+    );
     this.getCategories(1, 100);
   }
 
@@ -55,29 +69,58 @@ export class HomepageComponent implements OnInit {
   searchProducts() {
     this.currentPage = 1;
     this.itemsPerPage = 10;
-    this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+    this.getProducts(
+      this.keyword,
+      this.selectedCategoryId,
+      this.currentPage,
+      this.itemsPerPage
+    );
   }
 
-  getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
-    this.productService.getAllProduct(keyword, selectedCategoryId, page, limit).subscribe({
-      next: (response: any) => {
-        response.product.forEach((product: ProductResponse) => {
-          product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
-        });
-        this.products = response.product;
-        this.totalPages = response.totalPages;
-        this.visiblePages = this.generateVisiblePageArry(this.currentPage, this.totalPages);
-      },
-      error: (err: any) => {
-        console.error('Error fetching products:', err);
-      },
-    });
+  getProducts(
+    keyword: string,
+    selectedCategoryId: number,
+    page: number,
+    limit: number
+  ) {
+    this.productService
+      .getAllProduct(keyword, selectedCategoryId, page, limit)
+      .subscribe({
+        next: (response: any) => {
+          this.isLoading = false; // tắt loading sau khi nhận dữ liệu
+          this.toastr.success('Product loaded successfully', 'Succeess', {
+            timeOut: 1000,
+          }); // Toast thông báo thành công
+          response.product.forEach((product: ProductResponse) => {
+            product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+          });
+          this.products = response.product;
+          this.totalPages = response.totalPages;
+          this.visiblePages = this.generateVisiblePageArry(
+            this.currentPage,
+            this.totalPages
+          );
+        },
+        error: (err: any) => {
+          this.toastr.error('Error fetching product details', 'Error', {
+            timeOut: 1000,
+          }); // Thêm thông báo lỗi
+          console.error('Error fetching products:', err);
+        },
+      });
   }
 
   onPageChange(page: number, event: MouseEvent) {
+    this.isLoading = true;
     event.preventDefault();
     this.currentPage = page;
-    this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+    this.getProducts(
+      this.keyword,
+      this.selectedCategoryId,
+      this.currentPage,
+      this.itemsPerPage
+    );
+    this.isLoading = false;
   }
 
   generateVisiblePageArry(currentPage: number, totalPages: number): number[] {
@@ -91,11 +134,8 @@ export class HomepageComponent implements OnInit {
       startPage = Math.max(endPage - maxVisiblePages + 1, 1);
     }
 
-    return new Array(endPage - startPage + 1).fill(0).map((_, index) => startPage + index);
+    return new Array(endPage - startPage + 1)
+      .fill(0)
+      .map((_, index) => startPage + index);
   }
-
-
-
-
-
 }

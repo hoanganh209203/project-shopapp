@@ -13,6 +13,7 @@ import { OrderService } from '../../service/orders/order.service';
 import { OrderType } from '../../dtos/orders/orders.dto';
 import { environment } from '../../environments/environment';
 import { CommonModule, NgFor } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order',
@@ -41,17 +42,19 @@ export class OrderComponent implements OnInit {
     cart_items: [],
   };
   totalPrice: number = 0;
+  isLoading: boolean = false;
   constructor(
     private cartService: CartService,
     private productService: ProductService,
     private orderService: OrderService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
 
   }
 
   ngOnInit(): void {
-
+    this.isLoading = true;
     this.buildForm();
     const cart = this.cartService.getCart();
     const productIds = Array.from(cart.keys());
@@ -70,13 +73,17 @@ export class OrderComponent implements OnInit {
           };
         });
         this.calculateTotal();
+        this.isLoading = false;
       },
       complete() {
 
         console.log(123);
       },
       error: (err) => {
-        console.error('Error fetching product details', err);
+        this.toastr.error('Error fetching product details', err,{
+          timeOut: 3000,
+         });
+         this.isLoading = false;
       },
     });
   };
@@ -106,20 +113,29 @@ export class OrderComponent implements OnInit {
 
       this.orderService.createOrder(this.orderData).subscribe({
         next: () => {
-
-          console.log('Đặt hàng thành công!');
+          this.isLoading = true;
+          this.toastr.success('Order Products Successfully', 'Order Product',{
+            timeOut: 3000,
+           });
+          this.isLoading = false
         },
+
         complete: () => {
 
           this.calculateTotal();
         },
+
         error: (err) => {
 
-          console.error('Lỗi khi đặt hàng', err);
+          this.toastr.error('Error fetching product details', err,{
+            timeOut: 3000,
+           });
         },
       });
     } else {
-      alert('Dữ liệu không hợp lệ vui lòng kiểm tra lại');
+      this.toastr.error('Dữ liệu không hợp lệ vui lòng kiểm tra lại','Order Error',{
+        timeOut: 3000,
+       });
     }
   }
 

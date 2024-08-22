@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../service/auth/user.service';
 import { LoginResponse } from '../../interfaces/login.response';
 import { TokenService } from '../../service/tokens/token.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,15 +18,17 @@ import { TokenService } from '../../service/tokens/token.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-
+  isLoading: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,  // Đã sửa lại Router
     private userService: UserService,
-    private tokenService : TokenService
+    private tokenService : TokenService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.loginForm = this.fb.group({
       phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -33,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.isLoading = true;
     if (this.loginForm.invalid) {
       return;
     }
@@ -46,20 +50,25 @@ export class LoginComponent implements OnInit {
       next: (response: LoginResponse) => {
         //Muốn sử dụng token trong các yêu cầu API
         //debugger
-        console.log('Login successful!');
+        this.toastr.success('SignIn Successfully', 'Signin',{
+          timeOut: 3000,
+         });
         let token = response.token;
         this.tokenService.setToken(token)
-        console.log(response);
-
+        this.isLoading = true;
         this.router.navigate(['home']);
+        this.isLoading = false;
       },
       complete: () => {
         //debugger
+
         console.log('Login process completed.');
       },
-      error: (error: any) => {
+      error: (err: any) => {
        // debugger
-        console.log(`Cannot login, error: ${error}`);
+       this.toastr.error('Login failed','Signin',{
+        timeOut: 3000,
+       });
       },
     });
   }
