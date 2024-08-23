@@ -40,6 +40,7 @@ export class OrderComponent implements OnInit {
     shipping_method: 'express',
     coupon_code: '',
     cart_items: [],
+
   };
   totalPrice: number = 0;
   isLoading: boolean = false;
@@ -101,43 +102,48 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  placeOrder() {
+placeOrder() {
+  if (this.orderForm.valid) {
+    // Chuyển đổi các mục trong giỏ hàng thành định dạng phù hợp cho order_detail
+    const cartItems = this.cartItems.map(item => ({
+      product_id: item.product.id,
+      quantity: item.quantity,
+      price: item.product.price
+    }));
 
-    if (this.orderForm.valid) {
+    this.orderData = {
+      ...this.orderData,
+      ...this.orderForm.value,
+      total_money: this.totalPrice,
+      cart_items: cartItems, // Cập nhật các mục trong giỏ hàng vào orderData
+    };
 
-      this.orderData = {
-        ...this.orderData,
-        ...this.orderForm.value,
-        total_money: this.totalPrice,
-      };
+    this.orderService.createOrder(this.orderData).subscribe({
+      next: () => {
+        this.isLoading = true;
+        this.toastr.success('Order Products Successfully', 'Order Product', {
+          timeOut: 3000,
+        });
+        this.isLoading = false;
+      },
 
-      this.orderService.createOrder(this.orderData).subscribe({
-        next: () => {
-          this.isLoading = true;
-          this.toastr.success('Order Products Successfully', 'Order Product',{
-            timeOut: 3000,
-           });
-          this.isLoading = false
-        },
+      complete: () => {
+        this.calculateTotal();
+      },
 
-        complete: () => {
-
-          this.calculateTotal();
-        },
-
-        error: (err) => {
-
-          this.toastr.error('Error fetching product details', err,{
-            timeOut: 3000,
-           });
-        },
-      });
-    } else {
-      this.toastr.error('Dữ liệu không hợp lệ vui lòng kiểm tra lại','Order Error',{
-        timeOut: 3000,
-       });
-    }
+      error: (err) => {
+        this.toastr.error('Error fetching product details', err, {
+          timeOut: 3000,
+        });
+      },
+    });
+  } else {
+    this.toastr.error('Dữ liệu không hợp lệ vui lòng kiểm tra lại', 'Order Error', {
+      timeOut: 3000,
+    });
   }
+}
+
 
   //Hàm tính tổng tiền
   calculateTotal(): void {

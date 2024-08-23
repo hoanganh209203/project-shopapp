@@ -38,12 +38,26 @@
                     <h2 class="font-semibold text-xl leading-8 text-black mb-3">
                       {{ item.product.name }}
                     </h2>
-                    <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                      <!-- Nút giảm số lượng -->
+                      <button (click)="decreaseQuantity(item.product.id)"
+                        class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md">
+                        -
+                      </button>
+
+                      <!-- Hiển thị số lượng -->
                       <p class="font-medium text-base leading-7 text-black">
                         Qty:
                         <span class="text-gray-500">{{ item.quantity }}</span>
                       </p>
+
+                      <!-- Nút tăng số lượng -->
+                      <button (click)="increaseQuantity(item.product.id)"
+                        class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md">
+                        +
+                      </button>
                     </div>
+
                   </div>
                 </div>
                 <div class="grid grid-cols-5 items-center">

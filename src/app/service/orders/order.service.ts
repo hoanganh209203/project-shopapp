@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OrderResponse } from '../../interfaces/order.response';
 import { OrderType } from '../../dtos/orders/orders.dto';
+import { OrderTypeResponse } from '../../interfaces/orderType.response';
+import { OrderDetail } from '../../interfaces/orderDetail.response';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +30,18 @@ export class OrderService {
 
     return this.http.post<any>(this.apiOrder, orderData, { headers });
   }
+
+  getOrderById(orderId: number): Observable<OrderTypeResponse> {
+    return this.http.get<OrderTypeResponse>(`${this.apiOrder}/${orderId}`);
+  }
+
+
+ // Phương thức tính tổng số tiền từ order_detail
+ calculateTotalPrice(orderDetails: any[]): number {
+  return orderDetails.reduce((total, detail) => {
+    return total + (detail.price * detail.numberOfProduct);
+  }, 0);
+}
+
+
 }

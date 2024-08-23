@@ -30,7 +30,7 @@ export class DetailProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    const iParam = 8;
+    const iParam = 5;
     if (iParam !== null) {
       this.productId = +iParam;
     }
