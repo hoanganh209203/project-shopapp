@@ -64,6 +64,9 @@
                 name="email"
                 formControlName="email"
                 class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                <div class="text-red-900" *ngIf="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
+                  Xin mời nhập email
+                </div>
               </div>
 
               <div>
@@ -71,6 +74,9 @@
                 name="phone"
                 formControlName="phone_number"
                   class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                  <div class="text-red-900" *ngIf="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
+                    Xin mời nhập số điện thoại
+                  </div>
               </div>
             </div>
           </div>
@@ -83,12 +89,16 @@
                 name="address"
                 formControlName="address"
                   class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                  <div class="text-red-900" *ngIf="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
+                    Xin mời nhập địa chỉ
+                  </div>
               </div>
               <div>
                 <input type="text" placeholder="Shipping Address"
                 name="shippingAddress"
                 formControlName="shipping_address"
                   class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                  
               </div>
               <div>
                 <input type="text" placeholder="Note"

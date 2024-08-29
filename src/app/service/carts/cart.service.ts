@@ -34,12 +34,7 @@ export class CartService {
     return this.cart;
   }
 
-  private saveCartToLocalStorage(): void {
-    localStorage.setItem(
-      'cart',
-      JSON.stringify(Array.from(this.cart.entries()))
-    );
-  }
+
 
   clearCart(): void {
     this.cart.clear(); //Xóa toàn bộ dữ liệu trong giỏ hàng
@@ -54,14 +49,29 @@ export class CartService {
     return total;
   }
 
-  //Xóa 1 item cart
   removeFromCart(productId: number): void {
+    // Kiểm tra nếu sản phẩm có trong giỏ hàng
     if (this.cart.has(productId)) {
-      this.cart.delete(productId); // Xóa sản phẩm khỏi giỏ hàng
-      this.saveCartToLocalStorage(); // Cập nhật lại localStorage sau khi xóa
+      console.log('Before deletion:', this.cart); // Log trước khi xóa
+      this.cart.delete(productId); // Xóa sản phẩm khỏi Map
+      this.saveCartToLocalStorage(); // Cập nhật lại localStorage
+      console.log('After deletion:', this.cart); // Log sau khi xóa
     } else {
-      console.error('Sản phẩm không có trong giỏ hàng');
+      console.error('Product not found in cart');
     }
+  }
+
+
+
+
+  updateCart(productId: number, quantity: number): void {
+    console.log('Updating cart:', productId, quantity);
+    if (quantity > 0) {
+      this.cart.set(productId, quantity);
+    } else {
+      this.cart.delete(productId);
+    }
+    this.saveCartToLocalStorage();
   }
 
   getTotalProducts(): number {
@@ -86,6 +96,10 @@ export class CartService {
         return totalPrice;
       })
     );
+  }
+  private saveCartToLocalStorage(): void {
+    // Lưu giỏ hàng vào localStorage dưới dạng chuỗi JSON
+    localStorage.setItem('cart', JSON.stringify(Array.from(this.cart.entries())));
   }
 
 }

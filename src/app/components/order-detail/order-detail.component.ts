@@ -4,6 +4,7 @@ import { OrderTypeResponse } from '../../interfaces/orderType.response';
 import { OrderService } from '../../service/orders/order.service';
 import { OrderDetail } from '../../interfaces/orderDetail.response';
 import { environment } from '../../environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-detail',
@@ -31,14 +32,22 @@ export class OrderDetailComponent implements OnInit {
     order_detail: [],
   };
   totalOrderAmount: number = 0;
-  constructor(private orderService: OrderService) {}
+  orderId: number = 0;
+  constructor(private orderService: OrderService, private router: Router,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getOrderDetail();
+    this.route.paramMap.subscribe((params) => {
+      const idPr = params.get('id');
+      if (idPr) {
+        this.orderId = Number(idPr);
+        this.getOrderDetail(this.orderId);
+      } else {
+        console.error('Order ID không có trong URL');
+      }
+    });
   }
 
-  getOrderDetail(): void {
-    const orderId = 12;
+  getOrderDetail(orderId: number): void {
     this.orderService.getOrderById(orderId).subscribe({
       next: (response: any) => {
         debugger;
@@ -66,7 +75,7 @@ export class OrderDetailComponent implements OnInit {
         );
 
         console.log('Tổng tiền phải trả:', this.totalOrderAmount);
-
+        this.orderTypeResponse.total_money = this.totalOrderAmount;
         debugger;
         this.orderTypeResponse.order_detail = response.order_detail.map(
           (order_detail: OrderDetail) => {
@@ -98,5 +107,8 @@ export class OrderDetailComponent implements OnInit {
 
   toggleModal(): void {
     this.isModalOpen = !this.isModalOpen;
+  }
+  navigate(){
+    this.router.navigate(['/']);
   }
 }

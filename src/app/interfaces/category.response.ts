@@ -1,4 +1,6 @@
 export interface CategoryResponse {
   id : number
-  name : string
+  name : string,
+  image_thumnail:string,
+  url_image:string
 }

@@ -9,6 +9,7 @@ import { RegisterComponent } from './page/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TestToastComponent } from './components/test-toast/test-toast.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { ShowCategoryComponent } from './components/show-category/show-category.component';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,7 @@ export const routes: Routes = [
       },
 
       {
-        path: 'product/:id',
+        path: 'products/:id',
         component: DetailProductComponent,
       },
 
@@ -39,7 +40,7 @@ export const routes: Routes = [
         component: OrderComponent,
       },
       {
-        path: 'order_detail',
+        path: 'order_detail/:id',
         component: OrderDetailComponent,
       },
       {
@@ -51,7 +52,7 @@ export const routes: Routes = [
       },
       {
         path:"test",
-        component:TestToastComponent
+        component:ShowCategoryComponent
       }
 
     ],

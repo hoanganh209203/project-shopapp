@@ -62,10 +62,13 @@
           </div>
         </div>
       </header>
+<!-- Category -->
+    <!-- <app-show-category/> -->
 
+<!-- Products -->
       <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <li *ngFor="let product of products" class="relative group">
-          <a href="" class="block overflow-hidden relative">
+          <a [routerLink]="['/products',product.id]" class="block overflow-hidden relative">
             <img
               [src]="product.url"
               alt=""
@@ -76,12 +79,12 @@
             <div
               class="absolute inset-0 flex items-end justify-between space-x-4 opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-in-out p-4"
             >
-              <a href="/product/1" class="bg-blue-500 text-center text-white w-full py-2 px-4 rounded">Chi tiết</a>
+              <a [routerLink]="['/products',product.id]" class="bg-blue-500 text-center text-white w-full py-2 px-4 rounded">Chi tiết</a>
 
             </div>
           </a>
           <div class="relative bg-white pt-3">
-            <a href="">
+            <a [routerLink]="['/products',product.id]">
               <h3 class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
                 {{ product.name }}
               </h3>

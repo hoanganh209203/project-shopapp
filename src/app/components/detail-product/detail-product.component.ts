@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { CartService } from '../../service/carts/cart.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-product',
@@ -25,15 +26,17 @@ export class DetailProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    const iParam = 5;
-    if (iParam !== null) {
-      this.productId = +iParam;
-    }
+    this.route.paramMap.subscribe(params => {
+      const idPr  = params.get('id');
+      this.productId = Number(idPr);
+    });
 
     if (!isNaN(this.productId)) {
       this.productService.productDetail(this.productId).subscribe({
@@ -62,7 +65,7 @@ export class DetailProductComponent implements OnInit {
         },
       });
     } else {
-      console.log('Invalid productId: ', iParam);
+      console.log('Invalid productId: ',this.productId);
     }
   }
 
@@ -82,7 +85,12 @@ export class DetailProductComponent implements OnInit {
   }
 
   increaseQuantity(): void {
-    this.quantity++;
+    if(this.quantity <= 19){
+      this.quantity++;
+    }else{
+      this.toastr.error('Quantity limit is 20', 'Cart', { timeOut: 3000 });
+    }
+
   }
 
   decreaseQuantity(): void {
@@ -100,7 +108,7 @@ export class DetailProductComponent implements OnInit {
   }
 
   addToCart(): void {
-    if (this.products) {
+    if (this.products && this.quantity <= 20) {
       this.toastr.success('Product added to cart', 'Add To Cart',{
         timeOut: 3000,
        });
@@ -112,6 +120,44 @@ export class DetailProductComponent implements OnInit {
   }
 
   buyNow(): void {
-    this.toastr.info('Buying now...');
+    if (this.products) {
+      // Thêm sản phẩm hiện tại vào giỏ hàng
+      this.cartService.addToCart(this.productId, this.quantity);
+
+      // Lấy toàn bộ giỏ hàng từ CartService
+      const cartItems = this.cartService.getCart();
+      if (cartItems.size > 0) {
+        const order = {
+          items: Array.from(cartItems.entries()).map(([productId, quantity]) => ({ productId, quantity })),
+          orderDate: new Date(), // Thêm ngày order
+        };
+
+        // Lấy danh sách đơn hàng hiện tại từ localStorage
+        const currentOrders = localStorage.getItem('orders');
+        let orders = currentOrders ? JSON.parse(currentOrders) : [];
+
+        // Thêm đơn hàng mới vào danh sách đơn hàng
+        orders.push(order);
+
+        // Lưu lại danh sách đơn hàng mới vào localStorage
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        // Không xóa giỏ hàng, giữ nguyên trạng thái giỏ hàng
+        this.toastr.success('Product added to cart and order created successfully, proceeding to checkout...', 'Buy Now', {
+          timeOut: 3000,
+        });
+
+        // Điều hướng tới trang Order
+        this.router.navigate(['/order']);
+      } else {
+        this.toastr.error('No items in the cart to order');
+        console.error('Giỏ hàng trống, không thể tạo đơn hàng');
+      }
+    } else {
+      this.toastr.error('Unable to add product to cart');
+      console.error('products is null, unable to add to cart and order');
+    }
   }
+
+
 }

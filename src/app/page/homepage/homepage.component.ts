@@ -8,7 +8,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { CategoryResponse } from '../../interfaces/category.response';
 import { CategoryService } from '../../service/categories/category.service';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../service/carts/cart.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,6 +22,8 @@ import { ToastrService } from 'ngx-toastr';
     NgIf,
     NgClass,
     FormsModule,
+    RouterLink,
+
   ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
@@ -41,7 +43,8 @@ export class HomepageComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -83,6 +86,8 @@ export class HomepageComponent implements OnInit {
     page: number,
     limit: number
   ) {
+    console.log(123);
+
     this.productService
       .getAllProduct(keyword, selectedCategoryId, page, limit)
       .subscribe({
@@ -137,5 +142,8 @@ export class HomepageComponent implements OnInit {
     return new Array(endPage - startPage + 1)
       .fill(0)
       .map((_, index) => startPage + index);
+  }
+  viewDetail(productId: number) {
+    this.router.navigate(['home/detail', productId]); // Điều hướng tới trang chi tiết
   }
 }

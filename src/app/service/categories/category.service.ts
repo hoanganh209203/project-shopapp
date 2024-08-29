@@ -18,4 +18,6 @@ export class CategoryService {
     .set('limit',limit.toString());
     return this.http.get<CategoryResponse[]>( this.apiCategory,{params});
 }
+
+
 }

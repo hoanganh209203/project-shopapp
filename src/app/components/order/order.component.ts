@@ -14,6 +14,7 @@ import { OrderType } from '../../dtos/orders/orders.dto';
 import { environment } from '../../environments/environment';
 import { CommonModule, NgFor } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -49,7 +50,8 @@ export class OrderComponent implements OnInit {
     private productService: ProductService,
     private orderService: OrderService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
 
   }
@@ -60,7 +62,9 @@ export class OrderComponent implements OnInit {
     const cart = this.cartService.getCart();
     const productIds = Array.from(cart.keys());
     this.calculateTotal();
-
+    if(productIds.length === 0) {
+      return;
+    }
     this.productService.getProductsByIds(productIds).subscribe({
       next: (products) => {
         this.cartItems = productIds.map((productId: any) => {
@@ -154,4 +158,8 @@ placeOrder() {
 
   //Hàm áp mã giảm giá
   applyCoupon(): void {}
+
+  // routerHome(){
+  //   this.router.navigate()
+  // }
 }

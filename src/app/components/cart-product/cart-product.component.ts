@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { CommonModule, NgFor } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-product',
@@ -23,7 +24,7 @@ export class CartProductComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private toastr: ToastrService,
-
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,12 +64,14 @@ export class CartProductComponent implements OnInit {
   increaseQuantity(productId: number): void {
 
     const item = this.cartItems.find(i => i.product.id === productId);
-    if (item) {
-      item.quantity++;
-      this.cartService.updateCart(productId, item.quantity); // Cập nhật giỏ hàng
-      this.updateLocalStorage(); // Cập nhật localStorage
-      this.updateTotalPrice(); // Cập nhật tổng tiền
-    }
+    if (item && item.quantity <= 19) {
+        item.quantity++;
+        this.cartService.updateCart(productId, item.quantity); // Cập nhật giỏ hàng
+        this.updateLocalStorage(); // Cập nhật localStorage
+        this.updateTotalPrice(); // Cập nhật tổng tiền
+      }else{
+        this.toastr.error('Quantity Cart is limit 20', 'Cart', { timeOut: 3000 });
+      }
   }
 
   decreaseQuantity(productId: number): void {
@@ -84,14 +87,14 @@ export class CartProductComponent implements OnInit {
     }
   }
   removeItem(productId: number): void {
-    if (window.confirm("Are you sure you want to delete?")) {
-      this.isLoading = true;
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.cartService.removeFromCart(productId); // Xóa sản phẩm
+      this.loadCartItems(); // Cập nhật lại giỏ hàng
+      this.updateTotalPrice(); // Cập nhật lại tổng tiền
       this.toastr.info('Removed product from cart', 'Delete Cart', { timeOut: 3000 });
-      this.cartService.removeFromCart(productId);
-      this.updateLocalStorage(); // Cập nhật localStorage
-      this.loadCartItems(); // Tải lại giỏ hàng
     }
   }
+
 
   updateLocalStorage(): void {
     debugger
@@ -103,7 +106,7 @@ export class CartProductComponent implements OnInit {
   }
 
   updateTotalPrice(): void {
-  
+
     this.cartService.getTotalPrice().subscribe({
       next: (price) => {
         this.totalPrice = price;
@@ -112,5 +115,10 @@ export class CartProductComponent implements OnInit {
         console.error("Error fetching total price", err);
       }
     });
+  }
+
+
+  orderPlace() {
+    this.router.navigate(['/order']); // Điều hướng tới trang chi tiết
   }
 }
