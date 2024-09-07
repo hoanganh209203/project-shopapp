@@ -28,3 +28,31 @@
     transform: rotate(360deg);
   }
 }
+.btn-primary{
+  background-color: rgb(14 165 233);
+
+}
+.btn-xl {
+    padding: .75rem 1.5rem !important;
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .375rem;
+  padding: .5rem 1rem;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+.btn-link {
+  padding: 0;
+  --tw-text-opacity: 1;
+  color: rgb(14 165 233 / var(--tw-text-opacity));
+}

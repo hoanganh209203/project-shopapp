@@ -5,19 +5,17 @@ import { Observable } from 'rxjs';
 import { CategoryResponse } from '../../interfaces/category.response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   private apiCategory = `${environment.apiBaseUrl}/categories`;
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-
-  getCategories(page:number,limit:number):Observable<CategoryResponse[]>{
+  getCategories(page: number, limit: number): Observable<CategoryResponse[]> {
+    debugger
     const params = new HttpParams()
-    .set('page',page.toString())
-    .set('limit',limit.toString());
-    return this.http.get<CategoryResponse[]>( this.apiCategory,{params});
-}
-
-
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get<CategoryResponse[]>(this.apiCategory, { params });
+  }
 }

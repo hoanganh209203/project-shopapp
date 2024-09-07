@@ -123,11 +123,13 @@ placeOrder() {
     };
 
     this.orderService.createOrder(this.orderData).subscribe({
-      next: () => {
+      next: (response: any) => {
         this.isLoading = true;
+        const orderId = response.id;
         this.toastr.success('Order Products Successfully', 'Order Product', {
           timeOut: 3000,
         });
+        this.router.navigate([`/order_detail/${orderId}`]);
         this.isLoading = false;
       },
 

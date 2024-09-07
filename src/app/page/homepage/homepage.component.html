@@ -14,8 +14,8 @@
 
           <p class="mt-4 max-w-md text-gray-500">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-            praesentium cumque iure dicta incidunt est ipsam, officia dolor fugit
-            natus?
+            praesentium cumque iure dicta incidunt est ipsam, officia dolor
+            fugit natus?
           </p>
         </div>
         <div class="flex justify-between items-center gap-3">
@@ -48,7 +48,10 @@
                 class="block w-full px-4 py-3 border border-gray-300 bg-white text-gray-700 text-sm"
               >
                 <option [value]="0">Tất cả</option>
-                <option *ngFor="let category of categories" [value]="category.id">
+                <option class="flex justify-center items-center"
+                  *ngFor="let category of categories"
+                  [value]="category.id"
+                >
                   {{ category.name }}
                 </option>
               </select>
@@ -62,42 +65,130 @@
           </div>
         </div>
       </header>
-<!-- Category -->
-    <!-- <app-show-category/> -->
+      <!-- Category -->
+      <app-show-category />
 
-<!-- Products -->
-      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <li *ngFor="let product of products" class="relative group">
-          <a [routerLink]="['/products',product.id]" class="block overflow-hidden relative">
-            <img
-              [src]="product.url"
-              alt=""
-              class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-            />
+      <!-- Products -->
+      <section
+        class="bg-white px-4 pt-24 space-y-5 sm:px-6 sm:pt-32 xl:mx-auto xl:max-w-7xl lg:px-8"
+      >
 
-            <!-- Các nút Mua và Thêm vào giỏ hàng (chỉ hiện khi hover vào ảnh) -->
+        <img
+          src="https://cartify.novabolt.dev/storage/templates/home-page/banners/p2HejPKWo4KmRfhknI7fETJZ3vxpLwHIckeHUUXr.jpg"
+          alt="Xiaomi Smartphones"
+          class="w-full h-auto object-cover object-center rounded-lg"
+        />
+        <div wire:id="NdZygOqtH3zndDBFu77X">
+          <div class="mt-5 relative">
             <div
-              class="absolute inset-0 flex items-end justify-between space-x-4 opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-in-out p-4"
+              class="-mx-px grid grid-cols-1 sm:mx-0 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              <a [routerLink]="['/products',product.id]" class="bg-blue-500 text-center text-white w-full py-2 px-4 rounded">Chi tiết</a>
 
+              <div *ngFor="let product of products"
+                class="group relative rounded-lg p-4 ring-1 ring-slate-200 sm:p-6 hover:ring-1 hover:ring-sky-300 hover:shadow-lg hover:shadow-sky-300/50 transition"
+              >
+                <div
+                  class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg group-hover:opacity-75"
+                >
+                <a [routerLink]="['/products', product.id]">
+                  <img
+                    alt="Xiaomi 12 Pro"
+                    class="h-60 w-full object-cover object-center"
+                    [src]="product.url"
+
+                  />
+                </a>
+                </div>
+                <div class="pb-4 pt-10 text-center">
+                  <h3 class="text-sm font-medium text-slate-900 line-clamp-2">
+                    <a
+                    [routerLink]="['/products', product.id]"
+                    >
+                      <span aria-hidden="true" class="absolute inset-0"></span>
+                      {{product.name}}
+                    </a>
+                  </h3>
+                  <div class="mt-3 flex flex-col items-center">
+                    <p class="sr-only">1 out of 5 stars</p>
+                    <div class="flex items-center">
+                      <svg
+                        class="h-5 w-5 flex-shrink-0 text-sky-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <svg
+                        class="h-5 w-5 flex-shrink-0 text-sky-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <svg
+                        class="h-5 w-5 flex-shrink-0 text-sky-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <svg
+                        class="h-5 w-5 flex-shrink-0 text-sky-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <svg
+                        class="h-5 w-5 flex-shrink-0 text-slate-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="mt-1 text-sm text-slate-500">{{product.category_id}}</p>
+                  </div>
+                  <p class="mt-4 text-base font-medium text-slate-900">
+                    {{product.price | currency : "VND" : "symbol" : "1.0-0" }}
+                  </p>
+                </div>
+              </div>
             </div>
-          </a>
-          <div class="relative bg-white pt-3">
-            <a [routerLink]="['/products',product.id]">
-              <h3 class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                {{ product.name }}
-              </h3>
-            </a>
-            <p class="mt-2">
-              <span class="sr-only"> Regular Price </span>
-              <span class="tracking-wider text-gray-900">$ {{ product.price }}</span>
-            </p>
           </div>
-        </li>
+        </div>
+      </section>
 
-
-      </ul>
       <div class="flex justify-center items-center p-10">
         <ul class="pagination flex items-center space-x-2">
           <li *ngIf="currentPage > 1">

@@ -35,4 +35,16 @@ export class ProductService {
     const params = new HttpParams().set('ids',productIds.join(','));
     return this.http.get<ProductResponse[]>(`${this.apiProduct}/by-ids?${params}`);
   }
+
+  getCategoryProduct(
+    categoryId: number,
+    page: number,
+    limit: number,
+  ): Observable<ProductResponse[]> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('limit', limit);
+    return this.http.get<ProductResponse[]>(`${this.apiProduct}/category/${categoryId}`, { params });
+  }
+
 }

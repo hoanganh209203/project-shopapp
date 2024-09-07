@@ -4,7 +4,7 @@ import { ProductService } from '../../service/products/product.service';
 import { ProductImage } from '../../interfaces/productImage';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { CartService } from '../../service/carts/cart.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-detail-product',
   standalone: true,
-  imports: [FormsModule, NgClass, NgFor, NgStyle, NgIf, ToastrModule], // Import ToastrModule cho standalone component
+  imports: [FormsModule, NgClass, NgFor, NgStyle, NgIf, ToastrModule,CommonModule], // Import ToastrModule cho standalone component
+
   templateUrl: './detail-product.component.html',
   styleUrls: ['./detail-product.component.scss'],
 })

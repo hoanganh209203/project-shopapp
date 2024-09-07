@@ -19,7 +19,7 @@ export class CartProductComponent implements OnInit {
   totalPrice: number = 0;
   cartItems: { product: ProductResponse; quantity: number }[] = [];
   isLoading: boolean = false;
-
+  cartItem = JSON.parse(localStorage.getItem('cart') || '[]');
   constructor(
     private productService: ProductService,
     private cartService: CartService,
@@ -30,6 +30,7 @@ export class CartProductComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.loadCartItems();
+
   }
 
   loadCartItems(): void {
@@ -54,7 +55,7 @@ export class CartProductComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err: any) => {
-        this.toastr.error('Order Error', 'Order Product', { timeOut: 3000 });
+        this.toastr.warning('Order Error', 'Order Product', { timeOut: 3000 });
         console.error("Error fetching product details", err);
         this.isLoading = false;
       }

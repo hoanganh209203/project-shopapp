@@ -5,7 +5,7 @@
     - @tailwindcss/forms
 -->
 
-<section class="relative flex flex-wrap lg:h-screen lg:items-center">
+<!-- <section class="relative flex flex-wrap lg:h-screen lg:items-center">
   <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
     <div class="mx-auto max-w-lg text-center">
       <div class="flex justify-center items-center">
@@ -128,4 +128,113 @@
     </form>
   </div>
 
-</section>
+</section> -->
+
+<div class="py-32">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h1
+      class="text-center text-3xl font-bold tracking-tight text-slate-900"
+    >
+      Sign in to your account
+    </h1>
+    <p class="mt-2 text-center text-sm text-slate-600">
+      Or
+      <a href="register" class="btn btn-link">
+        create a new one to get started
+      </a>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div
+      class="bg-white shadow-sm ring-1 ring-slate-200 rounded-md sm:rounded-lg "
+    >
+      <div class="px-4 py-5 sm:px-6 !py-8 sm:!px-10">
+        <!-- Session Status -->
+
+        <form [formGroup]="loginForm"
+        (ngSubmit)="login()">
+          <!-- Email Address -->
+          <div>
+            <label
+              class="block font-medium text-sm text-slate-700 "
+              for="text"
+            >
+              Phone Number
+            </label>
+
+            <input
+              class="appearance-none border p-5 h-10 border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500  block mt-1 w-full sm:text-sm"
+              type="email"
+              required="required"
+              formControlName="phoneNumber"
+            />
+            <p
+            class="text-red-700 mt-2 p-2"
+            *ngIf="loginForm.get('phoneNumber')?.invalid && loginForm.get('phoneNumber')?.touched"
+          >
+            Phone ít nhất phải có 10 kí tự
+          </p>
+          </div>
+
+          <!-- Password -->
+          <div class="mt-6">
+            <label
+              class="block font-medium text-sm text-slate-700 "
+              for="password"
+            >
+              Password
+            </label>
+
+            <input
+              class="appearance-none border h-10 border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500  block mt-1 w-full sm:text-sm"
+              type="password"
+              formControlName="password"
+              required="required"
+            />
+            <p
+            class="text-red-700 mt-2 p-2"
+            *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          >
+            Password ít nhất phải có 4 kí tự
+          </p>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="mt-6 flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                class="appearance-none border border-slate-300 checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500  h-4 w-4 !rounded !shadow-none"
+                type="checkbox"
+                name="remember_me"
+                id="remember_me"
+              />
+
+              <label
+                class="block font-medium text-sm text-slate-700  ml-2"
+                for="remember_me"
+              >
+                Remember me
+              </label>
+            </div>
+            <div class="text-sm">
+              <a
+                href="https://cartify.novabolt.dev/forgot-password"
+                class="btn btn-link"
+              >
+                Forgot your password?
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <button  type="submit"
+            [disabled]="loginForm.invalid"
+             class="btn btn-primary w-full">
+             Sign in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

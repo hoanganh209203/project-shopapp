@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OrderResponse } from '../../interfaces/order.response';
 import { OrderType } from '../../dtos/orders/orders.dto';
 import { OrderTypeResponse } from '../../interfaces/orderType.response';
 import { OrderDetail } from '../../interfaces/orderDetail.response';
+import { UserOrderResponse } from '../../interfaces/userOrder.response';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,11 @@ export class OrderService {
   }, 0);
 }
 
-  getOrderUserId(){}
+  getOrderUserId( page:number,limit:number,userId:number):Observable<UserOrderResponse[]>{
+    const params = new HttpParams()
+    .set('page',page.toString())
+    .set('limit',limit.toString())
+    return this.http.get<UserOrderResponse[]>(`${this.apiOrder}/user/${userId}`,{params})
+  }
 
 }

@@ -4,176 +4,161 @@
 </div>
 
 <div *ngIf="!isLoading">
+<div class="" *ngIf="cartItems.length === 0; else cartNotEmpty">
+  <div class="mb-6 mx-auto text-center">
+    <svg class="mx-auto h-24 w-24 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
+    </svg>
+    <h3 class="mt-2 text-lg font-medium text-slate-900 ">
+      Your shopping cart is currently empty
+    </h3>
 
-  <section class="py-24 relative">
-    <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
-      <h2
-        class="font-manrope font-bold text-4xl leading-10 text-black text-center"
+    <p class="mt-1 text-sm text-slate-500 ">
+      Before proceed to checkout you must add some products to your shopping cart.
+    </p>
+
+    <div class="mt-6">
+      <a href="/" class="btn btn-primary">
+        Continue shopping
+      </a>
+    </div>
+  </div>
+</div>
+<ng-template #cartNotEmpty>
+  <div class="bg-white">
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
+      <h1
+        class="text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
       >
-        SHOP CART
-      </h2>
-      <p
-        class="mt-4 font-normal text-lg leading-8 text-gray-500 mb-11 text-center"
-      >
-        Thanks for making a purchase you can check our order summary frm below
-      </p>
-      <div
-        class="main-box border border-gray-200 rounded-xl pt-6 max-w-xl max-lg:mx-auto lg:max-w-full"
-      >
-        <div *ngFor="let item of cartItems" class="w-full px-3 min-[400px]:px-6">
-          <div
-            class="flex flex-col lg:flex-row items-center py-6 border-b border-gray-200 gap-6 w-full"
+        Shopping Cart
+      </h1>
+
+      <div class="mt-12">
+        <section aria-labelledby="cart-heading" >
+          <h2 id="cart-heading" class="sr-only">
+            Items in your shopping cart
+          </h2>
+
+          <ul *ngFor="let item of cartItems"
+            role="list"
+            class="divide-y divide-slate-200 border-b border-t border-slate-200"
           >
-            <div class="img-box max-lg:w-full">
-              <img
-                [src]="item.product.thumbnail"
-                alt="Premium Watch image"
-                class="aspect-square w-full lg:max-w-[140px] rounded-xl"
-              />
-            </div>
-            <div class="flex flex-row items-center w-full">
-              <div class="grid grid-cols-3 lg:grid-cols-2 w-full">
-                <div class="flex items-center">
-                  <div class="">
-                    <h2 class="font-semibold text-xl leading-8 text-black mb-3">
+            <li class="flex py-6">
+              <div class="flex-shrink-0 border border-slate-200 rounded-md">
+                <img
+                  alt="Xiaomi 11T"
+                  class="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32"
+                  [src]="item.product.thumbnail"
+                />
+              </div>
+
+              <div class="ml-4 flex flex-1 flex-col sm:ml-6">
+                <div>
+                  <div class="flex justify-between">
+                    <h4 class="text-sm">
+                      <a
+                        href="https://cartify.novabolt.dev/products/xiaomi-11t"
+                        class="font-medium text-slate-700 hover:text-slate-800"
+                      >
                       {{ item.product.name }}
-                    </h2>
-                    <div class="flex items-center space-x-2">
-                      <!-- Nút giảm số lượng -->
-                      <button (click)="decreaseQuantity(item.product.id)"
-                        class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md">
-                        -
-                      </button>
-
-                      <!-- Hiển thị số lượng -->
-                      <p class="font-medium text-base leading-7 text-black">
-                        Qty:
-                        <span class="text-gray-500">{{ item.quantity }}</span>
-                      </p>
-
-                      <!-- Nút tăng số lượng -->
-                      <button (click)="increaseQuantity(item.product.id)"
-                        class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md">
-                        +
-                      </button>
-                    </div>
-
+                      </a>
+                    </h4>
+                    <p class="ml-4 text-sm font-medium text-slate-900">
+                      {{
+                        +item.product.price * item.quantity
+                          | currency : "VND" : "symbol" : "1.0-0"
+                      }}
+                    </p>
                   </div>
+                  <ul
+                    class="mt-1 space-x-2 divide-x divide-slate-200 text-sm text-slate-500"
+                  >
+                  {{
+                    item.product.price
+                      | currency : "VND" : "symbol" : "1.0-0"
+                  }}
+                  </ul>
                 </div>
-                <div class="grid grid-cols-5 items-center">
-                  <div
-                    class="col-span-3 lg:col-span-1 flex items-center max-lg:mt-3"
-                  >
-                    <div class="flex gap-3 lg:block">
-                      <p class="font-medium text-xl leading-7 text-black">
-                        price
-                      </p>
-                      <p
-                        class="lg:mt-4 font-medium text-xl leading-7 text-indigo-600"
-                      >
-                        {{
-                          item.product.price
-                            | currency : "VND" : "symbol" : "1.0-0"
-                        }}
-                      </p>
-                    </div>
+
+                <div class="mt-4 flex flex-1 items-end justify-between">
+                  <div class="flex justify-center items-center">
+                    <label
+                      class="block font-medium text-sm text-slate-700 dark:text-slate-200 sr-only"
+                      for="quantity"
+                    >
+                      Quantity
+                    </label>
+                     <!-- Nút giảm số lượng -->
+                     <button (click)="decreaseQuantity(item.product.id)"
+                     class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md">
+                     -
+                   </button>
+
+                   <!-- Hiển thị số lượng -->
+                   <p class="font-medium text-base w-10 p-3 leading-7 text-black">
+                     <span class="text-gray-500">{{ item.quantity }}</span>
+                   </p>
+
+                   <!-- Nút tăng số lượng -->
+                   <button (click)="increaseQuantity(item.product.id)"
+                     class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md">
+                     +
+                   </button>
                   </div>
-                  <div
-                    class="col-span-5 lg:col-span-2 flex items-center max-lg:mt-3"
-                  >
-                    <div class="flex gap-3 lg:block">
-                      <p class="font-medium text-xl leading-7 text-black">
-                        Total
-                      </p>
-                      <p
-                        class="font-medium text-xl leading-6 whitespace-nowrap py-0.5 px-3 rounded-full lg:mt-3 bg-emerald-50 text-emerald-600"
-                      >
-                        {{
-                          +item.product.price * item.quantity
-                            | currency : "VND" : "symbol" : "1.0-0"
-                        }}
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="col-span-5 lg:col-span-2 flex items-center max-lg:mt-3"
-                  >
-                    <!-- Xoa -->
-                    <div class="flex gap-3 lg:block">
-                      <button (click)="removeItem(item.product.id)">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="30px"
-                          viewBox="0 -960 960 960"
-                          width="30px"
-                          fill="#EA3323"
-                        >
-                          <path
-                            d="M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                  <div class="ml-4">
+                    <button
+                    (click)="removeItem(item.product.id)"
+                      type="button"
+                      class="btn btn-link"
+                    >
+                      <span>Remove</span>
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="w-full border-t border-gray-200 px-6 flex flex-col lg:flex-row items-center justify-between"
-        >
-          <div
-            class="flex flex-col sm:flex-row items-center max-lg:border-b border-gray-200"
-          >
-            <a
-              href="/"
-              class="flex outline-0 py-6 sm:pr-6 sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-indigo-600"
-            >
-              <svg
-                class="stroke-black transition-all duration-500 group-hover:stroke-indigo-600"
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-              >
-                <path
-                  d="M5.5 5.5L16.5 16.5M16.5 5.5L5.5 16.5"
-                  stroke=""
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                />
-              </svg>
-              Cancel Order
-            </a>
-            <p
-              class="font-medium text-lg text-gray-900 pl-6 py-3 max-lg:text-center"
-            >
-              Paid using Credit Card
-              <span class="text-gray-500">ending with 8822</span>
+            </li>
+          </ul>
+
+          <h2 id="summary-heading" class="sr-only">Order summary</h2>
+
+          <div>
+            <dl class="space-y-4">
+              <div class="flex items-center justify-between">
+                <dt class="text-base font-medium text-slate-900">Subtotal</dt>
+                <dd class="ml-4 text-base font-medium text-slate-900">
+                  {{ totalPrice | currency : "VND" : "symbol" : "1.0-0" }}
+                </dd>
+              </div>
+            </dl>
+            <p class="mt-1 text-sm text-slate-500">
+              Shipping and taxes will be calculated at checkout.
             </p>
           </div>
-          <p class="font-semibold text-lg text-black py-6">
-            Total Price:
-            <span class="text-teal-600">
-              {{ totalPrice | currency : "VND" : "symbol" : "1.0-0" }}
-            </span>
-          </p>
+
+          <div class="mt-10">
+            <button (click)="orderPlace()"
+             class="btn btn-primary btn-xl w-full">
+                Checkout
+            </button>
         </div>
-        <div
-          class="flex flex-col lg:flex-row lg:items-center justify-between px-6 pb-6 border-b border-gray-200"
-        >
-          <button
-          (click)="orderPlace()"
-            class="rounded-full w-full py-3 px-7 font-semibold text-xl leading-7 text-white bg-teal-600 max-lg:mt-5 shadow-sm shadow-transparent transition-all duration-500 hover:bg-teal-700 hover:shadow-teal-400"
-          >
-            Đặt hàng
-          </button>
-        </div>
+
+          <div class="mt-6 text-center text-sm">
+            <p>
+              or
+              <a
+                href="/"
+                class="btn btn-link"
+              >
+                Continue Shopping
+                <span aria-hidden="true"> →</span>
+              </a>
+            </p>
+          </div>
+        </section>
       </div>
     </div>
-  </section>
+  </div>
 
+</ng-template>
 </div>
-
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->

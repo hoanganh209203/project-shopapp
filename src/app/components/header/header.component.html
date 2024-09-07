@@ -208,7 +208,7 @@
       <div class="flex h-16 items-center justify-between">
         <div class="flex flex-1 lg:hidden">
           <button
-            x-on:click="mobileMenuOpen = true"
+
             type="button"
             class="bg-white -ml-2 p-2 text-slate-400"
           >
@@ -243,8 +243,7 @@
         <div class="hidden lg:ml-8 lg:block lg:self-stretch">
           <div class="flex h-full justify-center space-x-8">
             <div
-              x-data="{ open: false }"
-              x-on:keydown.escape="open = false"
+
               class="flex"
             >
               <div class="relative flex">
@@ -262,14 +261,6 @@
                 </button>
               </div>
               <div
-                x-show="open"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-5"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0"
-                x-transition:leave-end="opacity-0 translate-y-5"
-                x-on:click.away="open = false"
                 class="absolute inset-x-0 top-full text-sm text-slate-500 z-10"
                 style="display: none"
               >
@@ -506,14 +497,14 @@
             class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6"
           >
             <a
-              href="https://cartify.novabolt.dev/login"
+              href="login"
               class="text-sm font-medium text-slate-700 hover:text-slate-800"
             >
               Sign in
             </a>
             <span class="h-6 w-px bg-slate-200" aria-hidden="true"></span>
             <a
-              href="https://cartify.novabolt.dev/register"
+              href="register"
               class="text-sm font-medium text-slate-700 hover:text-slate-800"
             >
               Create account
@@ -546,13 +537,43 @@
               </svg>
             </button>
           </div>
+          <div
+          *ngIf="isDropdownOpen"
+          class="z-50 absolute top-24 bg-white divide-y divide-gray-100 rounded-lg w-44"
+        >
+          <ul class="py-2 text-sm text-gray-700">
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:bg-gray-100"
+                (click)="handlClick(0)"
+                >Logout</a
+              >
+            </li>
+            <li>
+              <a
+                class="block px-4 py-2 hover:bg-gray-100"
+                (click)="handlClick(1)"
+                >My Order</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:bg-gray-100"
+                (click)="handlClick(2)"
+                >My Account</a
+              >
+            </li>
+          </ul>
+        </div>
 
 
 
           <!-- Cart -->
           <div class="ml-4 flow-root lg:ml-6">
             <a
-              href="https://cartify.novabolt.dev/cart"
+            href="/cart"
               class="group -m-2 flex items-center p-2"
             >
               <svg

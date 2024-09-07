@@ -1,0 +1,73 @@
+<div class="bg-gray-100 container">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-6">All categories</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Collection 1 -->
+      <div *ngFor="let category of categories"
+      class="relative group">
+      <a [routerLink]="['/product_by_cate', category.id]">
+        <img
+          class="w-full h-48 object-cover rounded-lg"
+          [src]="category.url_image"
+          alt="Smartphones"
+        />
+      </a>
+        <div
+          class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-2 text-white text-lg font-semibold rounded-b-lg group-hover:bg-opacity-75"
+        >
+        <a [routerLink]="['/product_by_cate', category.id]">
+          {{category.name}}
+        </a>
+        </div>
+
+      </div>
+    </div>
+    <div class="flex justify-center items-center p-10">
+      <ul class="pagination flex items-center space-x-2">
+        <li *ngIf="currentPage > 1">
+          <a
+            href="#"
+            (click)="onPageChange(1, $event)"
+            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+            >First</a
+          >
+        </li>
+        <li *ngIf="currentPage > 1">
+          <a
+            href="#"
+            (click)="onPageChange(currentPage - 1, $event)"
+            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+            >Previous</a
+          >
+        </li>
+        <ng-container *ngFor="let page of visiblePages">
+          <li [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }">
+            <a
+              href="#"
+              (click)="onPageChange(page, $event)"
+              class="page-link px-3 py-1 rounded"
+              >{{ page }}</a
+            >
+          </li>
+        </ng-container>
+        <li *ngIf="currentPage < totalPages">
+          <a
+            href="#"
+            (click)="onPageChange(currentPage + 1, $event)"
+            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+            >Next</a
+          >
+        </li>
+        <li *ngIf="currentPage < totalPages">
+          <a
+            href="#"
+            (click)="onPageChange(totalPages, $event)"
+            class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+            >Last</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

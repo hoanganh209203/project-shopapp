@@ -6,7 +6,7 @@
       Our collections
     </h2>
     <a
-      href="/collections"
+      href="/categories"
       class="hidden text-sm font-semibold text-sky-700 hover:text-sky-600 sm:block"
     >
       Browse all collections
@@ -19,16 +19,16 @@
         <div
           class="relative box-content h-64 overflow-x-auto py-2 xl:overflow-visible"
         >
-          <div  *ngFor="let category of categories"
+          <div
             class="min-w-screen-xl absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-8 xl:space-x-0 xl:px-0"
           >
-            <a
+            <a *ngFor="let category of categories"
               href="/collections/smartphones"
               class="group relative flex h-64 w-56 flex-col overflow-hidden rounded-lg p-6 xl:w-auto"
             >
               <span aria-hidden="true" class="absolute inset-0">
                 <img
-                  [src]="category.image_thumnail"
+                  [src]="category.url_image"
                   alt="Smartphones"
                   class="h-full w-full object-cover object-center transition duration-500 group-hover:scale-125"
                 />
@@ -43,7 +43,6 @@
                 {{category.name}}
               </span>
             </a>
-
           </div>
         </div>
       </div>

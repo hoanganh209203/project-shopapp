@@ -3,7 +3,7 @@ import { BannerComponent } from '../../components/banner/banner.component';
 import { ProductService } from '../../service/products/product.service';
 import { environment } from '../../environments/environment';
 import { ProductResponse } from '../../interfaces/product.response';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { CategoryResponse } from '../../interfaces/category.response';
 import { CategoryService } from '../../service/categories/category.service';
@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../service/carts/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { ShowCategoryComponent } from "../../components/show-category/show-category.component";
 
 @Component({
   selector: 'app-homepage',
@@ -23,8 +24,10 @@ import { ToastrService } from 'ngx-toastr';
     NgClass,
     FormsModule,
     RouterLink,
+    ShowCategoryComponent,
+    CommonModule
 
-  ],
+],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
 })
@@ -55,15 +58,19 @@ export class HomepageComponent implements OnInit {
       this.currentPage,
       this.itemsPerPage
     );
-    this.getCategories(1, 100);
+    this.getCategories(1, 20);
   }
 
   getCategories(page: number, limit: number) {
+    debugger
     this.categoryService.getCategories(page, limit).subscribe({
-      next: (categories: CategoryResponse[]) => {
-        this.categories = categories;
+      next: (response: any) => {
+        this.categories = response.category;
+      },
+      complete:()=>{
       },
       error: (err: any) => {
+        debugger
         console.log('Error fetching categories', err);
       },
     });
@@ -86,8 +93,6 @@ export class HomepageComponent implements OnInit {
     page: number,
     limit: number
   ) {
-    console.log(123);
-
     this.productService
       .getAllProduct(keyword, selectedCategoryId, page, limit)
       .subscribe({

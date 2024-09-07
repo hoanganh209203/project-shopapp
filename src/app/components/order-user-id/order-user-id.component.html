@@ -1,1 +1,254 @@
-<p>order-user-id works!</p>
+<div class="py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl sm:px-2 lg:px-8">
+    <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+      <h1
+        class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
+      >
+        Order history
+      </h1>
+      <p class="mt-2 text-sm text-slate-500">
+        Check the status of recent orders, manage returns, and discover
+        similar products.
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-16">
+    <h2 class="sr-only">Recent orders</h2>
+    <div class="mx-auto max-w-7xl sm:px-2 lg:px-8">
+      <div *ngIf="userOrderResponses.length>0"
+      class="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
+        <div *ngFor="let order of userOrderResponses"
+          class="border-t border-b border-slate-200 bg-white shadow-sm sm:rounded-lg sm:border"
+        >
+          <h2 class="sr-only">
+            Order placed on
+            <time>{{order.shipping_date}}</time>
+          </h2>
+
+          <div
+            class="flex items-center border-b border-slate-200 p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6"
+          >
+            <dl
+              class="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2"
+            >
+              <div>
+                <dt class="font-medium text-slate-900">Order number</dt>
+                <dd class="mt-1 text-slate-500">{{order.id}}</dd>
+              </div>
+              <div class="hidden sm:block">
+                <dt class="font-medium text-slate-900">Date placed</dt>
+                <dd class="mt-1 text-slate-500">
+                  <time>{{order.shipping_date}}</time>
+                </dd>
+              </div>
+              <div>
+                <dt class="font-medium text-slate-900">Total amount</dt>
+                <!-- <dd class="mt-1 font-medium text-slate-900">{{ totalOrderAmount | currency : "VND" : "symbol" : "1.0-0" }}</dd> -->
+                <dd class="mt-1 font-medium text-slate-900">{{ order.total_money | currency : "VND" : "symbol" : "1.0-0"}}</dd>
+              </div>
+            </dl>
+
+            <!-- <div class="relative flex justify-end lg:hidden">
+              <div
+                class="relative"
+
+              >
+                <div class="">
+                  <button
+                    type="button"
+                    class="-m-2 flex items-center p-2 text-slate-400 hover:text-slate-500"
+                    id="menu-0-button"
+
+                  >
+                    <span class="sr-only">Options for order 1339</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <div
+
+                  class="absolute z-50 my-2 w-48 rounded-md shadow-lg origin-top-right right-0 top-full"
+                  style="display: none"
+
+                >
+                  <div
+                    class="rounded-md ring-1 ring-slate-900/10 dark:ring-white/5 py-1 bg-white dark:bg-slate-800"
+                  >
+                    <a
+                      class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 dark:text-slate-200 dark:focus:bg-slate-900/40 dark:hover:bg-slate-900/40"
+                      href="https://cartify.novabolt.dev/account/orders/1339"
+                    >
+                      View
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div
+              class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4"
+            >
+              <a
+              [routerLink]="['/order_detail', order.id]"
+                class="btn btn-outline-primary"
+              >
+                <span>View Order</span>
+                <span class="sr-only">1339</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Products -->
+          <h3 class="sr-only">Items</h3>
+          <ul role="list" class="divide-y divide-slate-200">
+            <li class="p-4 sm:p-6"
+            *ngFor="let item of order.order_detail"
+            >
+              <div class="flex items-center sm:items-stretch">
+                <div
+                  class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-200 sm:h-40 sm:w-40"
+                >
+                  <img
+                   [src]="item.product.thumbnail"
+                    alt="AKG N20 Premium In-Ear Headphones"
+                    class="h-full w-full object-cover object-center"
+                  />
+                </div>
+                <div
+                  class="ml-6 flex flex-col flex-1 justify-between text-sm"
+                >
+                  <div>
+                    <div
+                      class="font-medium text-slate-900 sm:flex sm:justify-between"
+                    >
+                      <h4>x{{item.numberOfProduct}} {{item.product.name}}</h4>
+                      <p class="mt-2 sm:mt-0">{{(item.price)*(item.numberOfProduct) | currency : "VND" : "symbol" : "1.0-0"}}</p>
+                    </div>
+                    <p class="hidden text-slate-500 sm:mt-2 sm:block">
+                     {{item.product.description}}
+                    </p>
+                    <ul
+                      class="mt-2 space-x-2 divide-x divide-slate-200 text-slate-700"
+                    >
+                      <li class="inline">{{order.status}}</li>
+                    </ul>
+                  </div>
+                  <div class="hidden mt-2 sm:flex">
+                    <div
+                      class="flex items-center space-x-4 divide-x divide-slate-200 text-sm font-medium"
+                    >
+                      <div class="flex flex-1 justify-center">
+                        <a
+                        [routerLink]="['/products', item.product.id]"
+                          class="btn btn-link whitespace-nowrap"
+                        >
+                          View product
+                        </a>
+                      </div>
+                      <div class="flex flex-1 justify-center pl-4">
+                        <button
+                          type="button"
+                          class="btn btn-link whitespace-nowrap"
+                        >
+                          Write a review
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 sm:hidden">
+                <div
+                  class="mt-6 flex items-center space-x-4 divide-x divide-slate-200 border-t border-slate-200 pt-4 text-sm font-medium"
+                >
+                  <div class="flex flex-1 justify-center">
+                    <a
+                      href="https://cartify.novabolt.dev/products/akg-n20-premium-in-ear-headphones"
+                      class="btn btn-link whitespace-nowrap"
+                    >
+                      View product
+                    </a>
+                  </div>
+                  <div class="flex flex-1 justify-center pl-4">
+                    <button
+                      type="button"
+                      class="btn btn-link whitespace-nowrap"
+                    >
+                      Write a review
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+        <div class="mt-8">
+          <div></div>
+          <div class="flex justify-center items-center p-10">
+            <ul class="pagination flex items-center space-x-2">
+              <li *ngIf="currentPage > 1">
+                <a
+                  href="#"
+                  (click)="onPageChange(1, $event)"
+                  class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                  >First</a
+                >
+              </li>
+              <li *ngIf="currentPage > 1">
+                <a
+                  href="#"
+                  (click)="onPageChange(currentPage - 1, $event)"
+                  class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                  >Previous</a
+                >
+              </li>
+              <ng-container *ngFor="let page of visiblePages">
+                <li [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }">
+                  <a
+                    href="#"
+                    (click)="onPageChange(page, $event)"
+                    class="page-link px-3 py-1 rounded"
+                    >{{ page }}</a
+                  >
+                </li>
+              </ng-container>
+              <li *ngIf="currentPage < totalPages">
+                <a
+                  href="#"
+                  (click)="onPageChange(currentPage + 1, $event)"
+                  class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                  >Next</a
+                >
+              </li>
+              <li *ngIf="currentPage < totalPages">
+                <a
+                  href="#"
+                  (click)="onPageChange(totalPages, $event)"
+                  class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                  >Last</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

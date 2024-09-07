@@ -4,22 +4,18 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from 'express';
 import { CategoryResponse } from '../../interfaces/category.response';
 import { environment } from '../../environments/environment';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-show-category',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor,NgIf],
   templateUrl: './show-category.component.html',
   styleUrl: './show-category.component.scss'
 })
 export class ShowCategoryComponent implements OnInit{
   categories: CategoryResponse[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  page: number[] = [];
-  totalPages: number = 0;
-  visiblePages: number[] = [];
+  isLoading: boolean = false;
   constructor(
     private categoryService: CategoryService,
 
@@ -27,15 +23,20 @@ export class ShowCategoryComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.getCategories(1, 10);
+    this.isLoading = true;
+    this.getCategories(1, 5);
   }
 
   getCategories(page: number, limit: number) {
+    console.log(123);
+
     debugger
     this.categoryService.getCategories(page, limit).subscribe({
       next: (response: any) => {
+        debugger
+        this.isLoading = false;
         response.category.forEach((category:CategoryResponse) => {
-          category.url_image = `${environment.apiBaseUrl}/categories/images/${category.image_thumnail}`;
+          category.url_image = `${environment.apiBaseUrl}/categories/images/${category.thumnail}`;
         });
         this.categories = response.category;
       },
