@@ -1,0 +1,184 @@
+<div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+  <div
+    class="flex items-baseline justify-between border-b border-slate-200 pb-6 pt-24"
+  >
+    <h1 class="text-4xl font-bold tracking-tight text-slate-900">Products</h1>
+    <div class="flex bg-gray-50 items-center p-2 rounded-md">
+      <input
+        [(ngModel)]="keyword"
+        class="bg-gray-50 w-80 outline-none ml-1 block"
+        type="text"
+        placeholder="search..."
+      />
+      <button (click)="searchProducts()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 text-gray-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="pt-12 pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+    <aside>
+      <h2 class="sr-only">Filters</h2>
+
+      <button type="button" class="inline-flex items-center lg:hidden">
+        <span class="text-sm font-medium text-slate-700">Filters</span>
+        <svg
+          class="ml-1 h-5 w-5 flex-shrink-0 text-slate-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
+          ></path>
+        </svg>
+      </button>
+      <div class="hidden lg:block">
+        <div class="space-y-10 divide-y divide-slate-200">
+          <div class="space-y-4 overflow-y-auto h-96">
+            <div class="flex items-center">
+              <label class="flex items-center">
+                <input
+                  type="checkbox"
+                  class="form-checkbox h-4 w-4 text-blue-600"
+                  [checked]="selectedCategoryId === 0"
+                  (change)="onCategoryChange(0, $event)"
+                />
+                <span class="ml-2">All Categories</span>
+              </label>
+            </div>
+            <div *ngFor="let category of categories" class="flex items-center">
+              <label class="flex items-center">
+                <input
+                  type="checkbox"
+                  class="form-checkbox h-4 w-4 text-blue-600"
+                  [checked]="selectedCategoryId === category.id"
+                  (change)="onCategoryChange(category.id, $event)"
+                />
+                <span class="ml-2">{{ category.name }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
+      <h2 id="product-heading" class="sr-only">Products</h2>
+
+      <div
+        class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3"
+      >
+        <div
+          *ngFor="let product of products"
+          class="group relative flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white hover:border-sky-300 hover:shadow-lg hover:shadow-sky-300/50 transition duration-150"
+        >
+          <div
+            class="aspect-w-3 aspect-h-4 group-hover:opacity-75 sm:aspect-none"
+          >
+            <a [routerLink]="['/products', product.id]">
+              <img
+                alt="Harman Kardon Citation 100 Smart Home Speaker"
+                class="h-60 w-full object-cover object-center"
+                [src]="product.url"
+                width="600"
+                height="600"
+              />
+            </a>
+          </div>
+          <div
+            class="flex flex-1 flex-col items-center text-center space-y-2 p-4"
+          >
+            <h3 class="text-sm font-medium text-slate-900 line-clamp-2">
+              <a [routerLink]="['/products', product.id]">
+                <span class="absolute inset-0"></span>
+                {{ product.name }}
+              </a>
+            </h3>
+            <ul role="list" class="flex items-center space-x-3">
+              <li
+                class="h-4 w-4 rounded-full border border-black border-opacity-10"
+                style="background-color: #000000"
+              >
+                <span class="sr-only">Black</span>
+              </li>
+              <li
+                class="h-4 w-4 rounded-full border border-black border-opacity-10"
+                style="background-color: #808080"
+              >
+                <span class="sr-only">Grey</span>
+              </li>
+            </ul>
+            <div class="pt-1 flex flex-1 flex-col justify-end">
+              <p class="text-base font-medium text-slate-900">
+                {{ product.price | currency : "VND" : "symbol" : "1.0-0" }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10">
+        <div class="flex justify-center items-center p-10">
+          <ul class="pagination flex items-center space-x-2">
+            <li *ngIf="currentPage > 1">
+              <a
+                href="#"
+                (click)="onPageChange(1, $event)"
+                class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                >First</a
+              >
+            </li>
+            <li *ngIf="currentPage > 1">
+              <a
+                href="#"
+                (click)="onPageChange(currentPage - 1, $event)"
+                class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                >Previous</a
+              >
+            </li>
+            <ng-container *ngFor="let page of visiblePages">
+              <li
+                [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }"
+              >
+                <a
+                  href="#"
+                  (click)="onPageChange(page, $event)"
+                  class="page-link px-3 py-1 rounded"
+                  >{{ page }}</a
+                >
+              </li>
+            </ng-container>
+            <li *ngIf="currentPage < totalPages">
+              <a
+                href="#"
+                (click)="onPageChange(currentPage + 1, $event)"
+                class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                >Next</a
+              >
+            </li>
+            <li *ngIf="currentPage < totalPages">
+              <a
+                href="#"
+                (click)="onPageChange(totalPages, $event)"
+                class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+                >Last</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

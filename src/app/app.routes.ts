@@ -13,6 +13,14 @@ import { ShowCategoryComponent } from './components/show-category/show-category.
 import { OrderUserIdComponent } from './components/order-user-id/order-user-id.component';
 import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { ProductByCategoryComponent } from './components/product-by-category/product-by-category.component';
+import { AdminComponent } from './layout/admin/admin.component';
+import { ProductsComponent } from './components/admins/products-admin/products/products.component';
+import { ProductShopComponent } from './components/products/products.component';
+import { CategoriesAdminComponent } from './components/admins/categories/categories.component';
+import { AdminsComponent } from './page/admins/admins.component';
+import { CreateProductComponent } from './components/admins/products-admin/create-product/create-product.component';
+import { UpdateProductComponent } from './components/admins/products-admin/update-product/update-product.component';
+import { SoftDeletedListComponent } from './components/admins/products-admin/soft-deleted-list/soft-deleted-list.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +35,10 @@ export const routes: Routes = [
       {
         path: 'home',
         component: HomepageComponent,
+      },
+      {
+        path: 'shop',
+        component: ProductShopComponent,
       },
 
       {
@@ -72,8 +84,44 @@ export const routes: Routes = [
       },
     ],
   },
+  // {
+  //   path: '**',
+  //   component: NotFoundComponent,
+  // },
   {
-    path: '**',
-    component: NotFoundComponent,
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: '/admin/dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        component: AdminsComponent,
+      },
+      //products
+      {
+        path: 'products',
+        component: ProductsComponent,
+      },
+      {
+        path: 'add-product',
+        component: CreateProductComponent,
+      },
+      {
+        path: 'up-product/:id',
+        component: UpdateProductComponent,
+      },
+      {
+        path: 'list-soft-deleted',
+        component: SoftDeletedListComponent,
+      },
+      {
+        path: 'category',
+        component: CategoriesAdminComponent,
+      },
+    ],
   },
 ];

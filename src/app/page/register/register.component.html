@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto font-[sans-serif] p-6">
+<!-- <div class="max-w-4xl mx-auto font-[sans-serif] p-6">
   <div class="text-center mb-16">
     <div class="flex justify-center items-center">
       <a class="block text-teal-600" href="#">
@@ -37,13 +37,18 @@
         />
         <p
           class="text-red-700 mt-2 p-2"
-          *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched"
+          *ngIf="
+            registerForm.get('phoneNumber')?.invalid &&
+            registerForm.get('phoneNumber')?.touched
+          "
         >
           Phone ít nhất phải có 10 kí tự
         </p>
       </div>
       <div>
-        <label for="fullName" class="text-gray-800 text-sm mb-2 block">Full Name</label>
+        <label for="fullName" class="text-gray-800 text-sm mb-2 block"
+          >Full Name</label
+        >
         <input
           name="fullName"
           formControlName="fullName"
@@ -52,28 +57,38 @@
           class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
           placeholder="Enter name"
         />
-        <p class="text-red-700 mt-2 p-2"
-        *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+        <p
+          class="text-red-700 mt-2 p-2"
+          *ngIf="
+            registerForm.get('fullName')?.invalid &&
+            registerForm.get('fullName')?.touched
+          "
+        >
           Full name is required.
         </p>
       </div>
       <div>
-        <label for="dateOfBirth" class="text-gray-800 text-sm mb-2 block">Birth day</label>
+        <label for="dateOfBirth" class="text-gray-800 text-sm mb-2 block"
+          >Birth day</label
+        >
         <input
-        name="dateOfBirth"
-        formControlName="dateOfBirth"
-        type="date"
-        (change)="checkAge()"
+          name="dateOfBirth"
+          formControlName="dateOfBirth"
+          type="date"
+          (change)="checkAge()"
           type="date"
           class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
           placeholder="Enter last name"
         />
         <p
-        class="text-red-700 mt-2 p-2"
-        *ngIf="registerForm.get('dateOfBirth')?.hasError('invalidAge') && registerForm.get('dateOfBirth')?.touched"
-      >
-        Bạn chưa đủ số tuổi quy định là 18 tuổi
-      </p>
+          class="text-red-700 mt-2 p-2"
+          *ngIf="
+            registerForm.get('dateOfBirth')?.hasError('invalidAge') &&
+            registerForm.get('dateOfBirth')?.touched
+          "
+        >
+          Bạn chưa đủ số tuổi quy định là 18 tuổi
+        </p>
       </div>
       <div>
         <label class="text-gray-800 text-sm mb-2 block">Address</label>
@@ -100,9 +115,12 @@
         />
         <p
           class="text-red-700 mt-2 p-2"
-          *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          *ngIf="
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.touched
+          "
         >
-        Password is required and must be at least 6 characters long.
+          Password is required and must be at least 6 characters long.
         </p>
       </div>
       <div>
@@ -119,21 +137,211 @@
         />
         <p
           class="text-red-700 mt-2 p-2"
-          *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('retypePassword')?.touched"
+          *ngIf="
+            registerForm.hasError('passwordMismatch') &&
+            registerForm.get('retypePassword')?.touched
+          "
         >
-        Passwords do not match.
+          Passwords do not match.
         </p>
       </div>
     </div>
 
     <div class="!mt-12">
       <button
-      type="submit"
-      [disabled]="registerForm.invalid"
+        type="submit"
+        [disabled]="registerForm.invalid"
         class="py-3.5 px-7 text-sm font-semibold tracking-wider rounded-md text-white bg-teal-600 hover:bg-teal-800 focus:outline-none"
       >
         Sign up
       </button>
     </div>
   </form>
+</div> -->
+
+<div class="py-32">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h1 class="text-center text-3xl font-bold tracking-tight text-slate-900">
+      Account registration
+    </h1>
+    <p class="mt-2 text-center text-sm text-slate-600">
+      Already have one?
+      <a href="https://cartify.novabolt.dev/login" class="btn btn-link">
+        Sign in here
+      </a>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div
+      class="bg-white shadow-sm ring-1 ring-slate-200 rounded-md sm:rounded-lg"
+    >
+      <div class="px-4 py-5 sm:px-6">
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <!-- Phone -->
+          <div>
+            <label
+              class="block font-medium text-sm text-slate-700"
+              for="phoneNumber"
+            >
+              Phone number
+            </label>
+
+            <input
+              name="phoneNumber"
+              formControlName="phoneNumber"
+              class="appearance-none border border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500 block mt-1 w-full sm:text-sm"
+              type="text"
+              required="required"
+              autofocus="autofocus"
+            />
+            <p
+              class="text-red-700 mt-2 p-2"
+              *ngIf="
+                registerForm.get('phoneNumber')?.invalid &&
+                registerForm.get('phoneNumber')?.touched
+              "
+            >
+              Phone ít nhất phải có 10 kí tự
+            </p>
+          </div>
+          <!-- Name -->
+          <div class="top-2">
+            <label
+              class="block font-medium text-sm text-slate-700"
+              for="fullName"
+            >
+              Full nanme
+            </label>
+
+            <input
+              class="appearance-none border border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500 block mt-1 w-full sm:text-sm"
+              formControlName="fullName"
+              name="fullName"
+              type="text"
+              required="required"
+              autofocus="autofocus"
+            />
+            <p
+              class="text-red-700 mt-2 p-2"
+              *ngIf="
+                registerForm.get('fullName')?.invalid &&
+                registerForm.get('fullName')?.touched
+              "
+            >
+              Full name is required.
+            </p>
+          </div>
+
+          <!-- Address -->
+          <div class="mt-6">
+            <label class="block font-medium text-sm text-slate-700">
+              Address
+            </label>
+
+            <input
+              class="appearance-none border border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500 block mt-1 w-full sm:text-sm"
+              type="text"
+              formControlName="address"
+              name="address"
+              required="required"
+            />
+          </div>
+          <!-- BirthDay -->
+          <div class="mt-6">
+            <label
+              class="block font-medium text-sm text-slate-700"
+              for="dateOfBirth"
+            >
+              Birthday
+            </label>
+
+            <input
+              class="appearance-none border border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500 block mt-1 w-full sm:text-sm"
+              name="dateOfBirth"
+              formControlName="dateOfBirth"
+              type="date"
+              (change)="checkAge()"
+              required="required"
+            />
+            <p
+              class="text-red-700 mt-2 p-2"
+              *ngIf="
+                registerForm.get('dateOfBirth')?.hasError('invalidAge') &&
+                registerForm.get('dateOfBirth')?.touched
+              "
+            >
+              Bạn chưa đủ số tuổi quy định là 18 tuổi
+            </p>
+          </div>
+          <!-- Password -->
+          <div class="mt-6">
+            <label
+              class="block font-medium text-sm text-slate-700"
+              for="password"
+            >
+              Password
+            </label>
+
+            <input
+              class="appearance-none border border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500 block mt-1 w-full sm:text-sm"
+              name="password"
+              formControlName="password"
+              required
+              type="password"
+              required="required"
+              autocomplete="new-password"
+            />
+            <p
+              class="text-red-700 mt-2 p-2"
+              *ngIf="
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.touched
+              "
+            >
+              Password is required and must be at least 6 characters long.
+            </p>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mt-6">
+            <label
+              class="block font-medium text-sm text-slate-700"
+              for="retypePassword"
+            >
+              Confirm Password
+            </label>
+
+            <input
+              class="appearance-none border border-slate-300 rounded-md shadow-sm checked:bg-sky-500 checked:text-sky-500 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:border-sky-500 focus:ring-sky-500 block mt-1 w-full sm:text-sm"
+              name="retypePassword"
+              formControlName="retypePassword"
+              required
+              type="password"
+              required="required"
+            />
+            <p
+              class="text-red-700 mt-2 p-2"
+              *ngIf="
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.touched
+              "
+            >
+              Password is required and must be at least 6 characters long.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <button
+              type="submit"
+              [disabled]="registerForm.invalid"
+              class="btn btn-primary w-full"
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

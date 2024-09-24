@@ -1,0 +1,161 @@
+<!-- component -->
+<div class="bg-white p-8 rounded-md w-full">
+  <div class="flex items-center justify-between pb-6">
+    <div class="flex justify-between items-center">
+      <h2 class="text-gray-600 font-semibold">Products Đã Xóa</h2>
+    </div>
+  </div>
+  <div class="">
+    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+      <table class="min-w-full leading-normal">
+        <thead class="min-w-full">
+          <tr>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              #
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Image
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Name
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Price
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Description
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Category
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Created At
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Active
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ product.id }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 w-20 h-20">
+                  <img class="w-full h-full" [src]="product.url" alt="" />
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ product.name }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ product.price }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p
+                class="text-gray-900 whitespace-no-wrap line-clamp-3 overflow-hidden text-ellipsis"
+              >
+                {{ product.description }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ product.category.name }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ product.createdAt }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <div class="flex justify-center items-center gap-2">
+                <span
+                  class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
+                >
+                  <span
+                    aria-hidden
+                    class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                  ></span>
+                  <a (click)="restoreProduct(product.id)" class="relative"
+                    >Restore</a
+                  >
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flex justify-center items-center p-10">
+        <ul class="pagination flex items-center space-x-2">
+          <li *ngIf="currentPage > 1">
+            <a
+              href="#"
+              (click)="onPageChange(1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >First</a
+            >
+          </li>
+          <li *ngIf="currentPage > 1">
+            <a
+              href="#"
+              (click)="onPageChange(currentPage - 1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Previous</a
+            >
+          </li>
+          <ng-container *ngFor="let page of visiblePages">
+            <li [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }">
+              <a
+                href="#"
+                (click)="onPageChange(page, $event)"
+                class="page-link px-3 py-1 rounded"
+                >{{ page }}</a
+              >
+            </li>
+          </ng-container>
+          <li *ngIf="currentPage < totalPages">
+            <a
+              href="#"
+              (click)="onPageChange(currentPage + 1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Next</a
+            >
+          </li>
+          <li *ngIf="currentPage < totalPages">
+            <a
+              href="#"
+              (click)="onPageChange(totalPages, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Last</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

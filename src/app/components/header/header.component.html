@@ -1,182 +1,3 @@
-<!-- <header class="bg-white">
-  <div
-    class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
-  >
-    <a class="block text-teal-600" href="#">
-      <span class="sr-only">Home</span>
-      <svg
-        class="h-8"
-        viewBox="0 0 28 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0.41 10.3847C1.14777 7.4194 2.85643 4.7861 5.2639 2.90424C7.6714 1.02234 10.6393 0 13.695 0C16.7507 0 19.7186 1.02234 22.1261 2.90424C24.5336 4.7861 26.2422 7.4194 26.98 10.3847H25.78C23.7557 10.3549 21.7729 10.9599 20.11 12.1147C20.014 12.1842 19.9138 12.2477 19.81 12.3047H19.67C19.5662 12.2477 19.466 12.1842 19.37 12.1147C17.6924 10.9866 15.7166 10.3841 13.695 10.3841C11.6734 10.3841 9.6976 10.9866 8.02 12.1147C7.924 12.1842 7.8238 12.2477 7.72 12.3047H7.58C7.4762 12.2477 7.376 12.1842 7.28 12.1147C5.6171 10.9599 3.6343 10.3549 1.61 10.3847H0.41ZM23.62 16.6547C24.236 16.175 24.9995 15.924 25.78 15.9447H27.39V12.7347H25.78C24.4052 12.7181 23.0619 13.146 21.95 13.9547C21.3243 14.416 20.5674 14.6649 19.79 14.6649C19.0126 14.6649 18.2557 14.416 17.63 13.9547C16.4899 13.1611 15.1341 12.7356 13.745 12.7356C12.3559 12.7356 11.0001 13.1611 9.86 13.9547C9.2343 14.416 8.4774 14.6649 7.7 14.6649C6.9226 14.6649 6.1657 14.416 5.54 13.9547C4.4144 13.1356 3.0518 12.7072 1.66 12.7347H0V15.9447H1.61C2.39051 15.924 3.154 16.175 3.77 16.6547C4.908 17.4489 6.2623 17.8747 7.65 17.8747C9.0377 17.8747 10.392 17.4489 11.53 16.6547C12.1468 16.1765 12.9097 15.9257 13.69 15.9447C14.4708 15.9223 15.2348 16.1735 15.85 16.6547C16.9901 17.4484 18.3459 17.8738 19.735 17.8738C21.1241 17.8738 22.4799 17.4484 23.62 16.6547ZM23.62 22.3947C24.236 21.915 24.9995 21.664 25.78 21.6847H27.39V18.4747H25.78C24.4052 18.4581 23.0619 18.886 21.95 19.6947C21.3243 20.156 20.5674 20.4049 19.79 20.4049C19.0126 20.4049 18.2557 20.156 17.63 19.6947C16.4899 18.9011 15.1341 18.4757 13.745 18.4757C12.3559 18.4757 11.0001 18.9011 9.86 19.6947C9.2343 20.156 8.4774 20.4049 7.7 20.4049C6.9226 20.4049 6.1657 20.156 5.54 19.6947C4.4144 18.8757 3.0518 18.4472 1.66 18.4747H0V21.6847H1.61C2.39051 21.664 3.154 21.915 3.77 22.3947C4.908 23.1889 6.2623 23.6147 7.65 23.6147C9.0377 23.6147 10.392 23.1889 11.53 22.3947C12.1468 21.9165 12.9097 21.6657 13.69 21.6847C14.4708 21.6623 15.2348 21.9135 15.85 22.3947C16.9901 23.1884 18.3459 23.6138 19.735 23.6138C21.1241 23.6138 22.4799 23.1884 23.62 22.3947Z"
-          fill="currentColor"
-        />
-      </svg>
-    </a>
-
-    <div class="flex flex-1 items-center justify-end md:justify-between">
-      <nav aria-label="Global" class="hidden md:block">
-        <ul class="flex items-center gap-6 text-sm">
-          <li
-          [ngClass]="{'active' : activeNaveItem === 0}"
-          (click)="setActiveNavItem(0)"
-          >
-            <a
-              class="text-gray-500 transition hover:text-gray-500/75"
-              routerLink="/"
-            >
-              Home
-            </a>
-          </li>
-
-          <li
-          [ngClass]="{'active' : activeNaveItem === 1}"
-          (click)="setActiveNavItem(1)"
-          >
-            <a
-              class="text-gray-500 transition hover:text-gray-500/75"
-              routerLink="/"
-            >
-            About
-            </a>
-          </li>
-
-          <li
-          [ngClass]="{'active' : activeNaveItem === 2}"
-          (click)="setActiveNavItem(2)"
-          >
-            <a
-              class="text-gray-500 transition hover:text-gray-500/75"
-              routerLink="/"
-            >
-              History
-            </a>
-          </li>
-
-          <li
-          [ngClass]="{'active' : activeNaveItem === 3}"
-          (click)="setActiveNavItem(3)"
-          >
-            <a
-              class="text-gray-500 transition hover:text-gray-500/75"
-              routerLink="/"
-            >
-              Projects
-            </a>
-          </li>
-
-          <li
-          [ngClass]="{'active' : activeNaveItem === 4}"
-          (click)="setActiveNavItem(4)"
-          >
-            <a
-              class="text-gray-500 transition hover:text-gray-500/75"
-              routerLink="/"
-            >
-              Blog
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div class="flex items-center gap-4">
-        <div class="cart">
-          <a href="/cart">
-            <svg
-              class="cart-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              height="40px"
-              viewBox="0 -960 960 960"
-              width="40px"
-              fill="#48752C"
-            >
-              <path
-                d="M284.53-80.67q-30.86 0-52.7-21.97Q210-124.62 210-155.47q0-30.86 21.98-52.7Q253.95-230 284.81-230t52.69 21.98q21.83 21.97 21.83 52.83t-21.97 52.69q-21.98 21.83-52.83 21.83Zm400 0q-30.86 0-52.7-21.97Q610-124.62 610-155.47q0-30.86 21.98-52.7Q653.95-230 684.81-230t52.69 21.98q21.83 21.97 21.83 52.83t-21.97 52.69q-21.98 21.83-52.83 21.83ZM238.67-734 344-515.33h285.33l120-218.67H238.67ZM206-800.67h589.38q22.98 0 34.97 20.84 11.98 20.83.32 41.83L693.33-490.67q-11 19.34-28.87 30.67-17.87 11.33-39.13 11.33H324l-52 96h487.33V-286H278q-43 0-63-31.83-20-31.84-.33-68.17l60.66-111.33-149.33-316H47.33V-880h121.34L206-800.67Zm138 285.34h285.33H344Z"
-              />
-            </svg>
-            <span class="cart-count">{{ totalProducts }}</span>
-          </a>
-        </div>
-        <div *ngIf="userResponse">
-          <button
-            (click)="toggleDropdown()"
-            class="text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-            type="button"
-          >
-            {{ userResponse.fullname }}
-            <svg
-              class="w-2.5 h-2.5 ms-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
-
-          <div
-            *ngIf="isDropdownOpen"
-            class="z-50 absolute bg-white divide-y divide-gray-100 rounded-lg w-44"
-          >
-            <ul class="py-2 text-sm text-gray-700">
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100"
-                  (click)="handlClick(0)"
-                  >Logout</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100"
-                  (click)="handlClick(1)"
-                  >My Order</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100"
-                  (click)="handlClick(2)"
-                  >My Account</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div *ngIf="!userResponse" class="sm:flex sm:gap-4">
-          <a
-            class="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
-            href="login"
-          >
-            Login
-          </a>
-
-          <a
-            class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
-            href="register"
-          >
-            Register
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</header> -->
-
 <header class="relative bg-white">
   <div class="bg-sky-700">
     <div
@@ -207,11 +28,7 @@
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="flex flex-1 lg:hidden">
-          <button
-
-            type="button"
-            class="bg-white -ml-2 p-2 text-slate-400"
-          >
+          <button type="button" class="bg-white -ml-2 p-2 text-slate-400">
             <span class="sr-only">Open menu</span>
             <svg
               class="h-6 w-6"
@@ -242,248 +59,34 @@
 
         <div class="hidden lg:ml-8 lg:block lg:self-stretch">
           <div class="flex h-full justify-center space-x-8">
-            <div
-
-              class="flex"
+            <a
+              [ngClass]="{ active: activeNaveItem === 0 }"
+              (click)="setActiveNavItem(0)"
+              routerLink="/"
+              class="flex items-center text-sm font-medium text-slate-700 hover:text-slate-800"
             >
-              <div class="relative flex">
-                <button
-                  [ngClass]="{ active: activeNaveItem === 0 }"
-                  (click)="setActiveNavItem(0)"
-                  x-on:click="open = !open"
-                  type="button"
-                  class="relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out border-transparent text-slate-700 hover:text-slate-800"
-                  x-bind:class="{ 'border-sky-600 text-sky-600': open, 'border-transparent text-slate-700 hover:text-slate-800': !open }"
-                  x-bind:aria-expanded="open.toString()"
-                  aria-expanded="false"
-                >
-                  <span>Shop</span>
-                </button>
-              </div>
-              <div
-                class="absolute inset-x-0 top-full text-sm text-slate-500 z-10"
-                style="display: none"
-              >
-                <div
-                  class="absolute inset-0 top-1/2 bg-white shadow"
-                  aria-hidden="true"
-                ></div>
-                <div class="relative bg-white">
-                  <div class="mx-auto max-w-7xl px-8">
-                    <div
-                      class="grid grid-cols-5 gap-y-10 gap-x-8 py-16 text-sm"
-                    >
-                      <div>
-                        <p
-                          id="Audio-heading"
-                          class="font-medium text-slate-900"
-                        >
-                          Audio
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby="Audio-heading"
-                          class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                        >
-                          <li class="flex">
-                            <a
-                              href="/collections/headphones"
-                              class="hover:text-slate-800"
-                            >
-                              Headphones
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/earbuds"
-                              class="hover:text-slate-800"
-                            >
-                              Earbuds
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/speakers"
-                              class="hover:text-slate-800"
-                            >
-                              Portable speakers
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/turntables"
-                              class="hover:text-slate-800"
-                            >
-                              Turntables
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p id="Hifi-heading" class="font-medium text-slate-900">
-                          Hifi
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby="Hifi-heading"
-                          class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                        >
-                          <li class="flex">
-                            <a
-                              href="/collections/speakers"
-                              class="hover:text-slate-800"
-                            >
-                              Speakers
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/subwoofers"
-                              class="hover:text-slate-800"
-                            >
-                              Subwoofers
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/soundbars"
-                              class="hover:text-slate-800"
-                            >
-                              Soundbars
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/amplifiers"
-                              class="hover:text-slate-800"
-                            >
-                              Amplifiers
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p
-                          id="TV &amp; Home Cinema-heading"
-                          class="font-medium text-slate-900"
-                        >
-                          TV &amp; Home Cinema
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby="TV &amp; Home Cinema-heading"
-                          class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                        >
-                          <li class="flex">
-                            <a
-                              href="/collections/led-tvs"
-                              class="hover:text-slate-800"
-                            >
-                              LED TVs
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/oled-tvs"
-                              class="hover:text-slate-800"
-                            >
-                              OLED TVs
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/projectors"
-                              class="hover:text-slate-800"
-                            >
-                              Projectors
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/blu-ray-dvd-players"
-                              class="hover:text-slate-800"
-                            >
-                              Blu-Ray &amp; DVD players
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p
-                          id="Smartphones-heading"
-                          class="font-medium text-slate-900"
-                        >
-                          Smartphones
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby="Smartphones-heading"
-                          class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                        >
-                          <li class="flex">
-                            <a
-                              href="/collections/smartphones"
-                              class="hover:text-slate-800"
-                            >
-                              Apple
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/smartphones"
-                              class="hover:text-slate-800"
-                            >
-                              LG
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/smartphones"
-                              class="hover:text-slate-800"
-                            >
-                              Samsung
-                            </a>
-                          </li>
-                          <li class="flex">
-                            <a
-                              href="/collections/smartphones"
-                              class="hover:text-slate-800"
-                            >
-                              Xiaomi
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p
-                          id="Our selection-heading"
-                          class="font-medium text-slate-900"
-                        >
-                          Our selection
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby="Our selection-heading"
-                          class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                        ></ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              Home
+            </a>
             <a
               [ngClass]="{ active: activeNaveItem === 1 }"
               (click)="setActiveNavItem(1)"
-              href="/blog"
+              routerLink="/shop"
+              class="flex items-center text-sm font-medium text-slate-700 hover:text-slate-800"
+            >
+              Shop
+            </a>
+            <a
+              [ngClass]="{ active: activeNaveItem === 2 }"
+              (click)="setActiveNavItem(2)"
+              routerLink="/blog"
               class="flex items-center text-sm font-medium text-slate-700 hover:text-slate-800"
             >
               Blog
             </a>
             <a
-              [ngClass]="{ active: activeNaveItem === 2 }"
-              (click)="setActiveNavItem(2)"
-              href="/contact"
+              [ngClass]="{ active: activeNaveItem === 3 }"
+              (click)="setActiveNavItem(3)"
+              routerLink="/contact"
               class="flex items-center text-sm font-medium text-slate-700 hover:text-slate-800"
             >
               Contact
@@ -538,44 +141,37 @@
             </button>
           </div>
           <div
-          *ngIf="isDropdownOpen"
-          class="z-50 absolute top-24 bg-white divide-y divide-gray-100 rounded-lg w-44"
-        >
-          <ul class="py-2 text-sm text-gray-700">
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 hover:bg-gray-100"
-                (click)="handlClick(0)"
-                >Logout</a
-              >
-            </li>
-            <li>
-              <a
-                class="block px-4 py-2 hover:bg-gray-100"
-                (click)="handlClick(1)"
-                >My Order</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 hover:bg-gray-100"
-                (click)="handlClick(2)"
-                >My Account</a
-              >
-            </li>
-          </ul>
-        </div>
-
-
+            *ngIf="isDropdownOpen"
+            class="z-50 absolute top-24 bg-white divide-y divide-gray-100 rounded-lg w-44"
+          >
+            <ul class="py-2 text-sm text-gray-700">
+              <li>
+                <a
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  (click)="handlClick(0)"
+                  >Logout</a
+                >
+              </li>
+              <li>
+                <a
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  (click)="handlClick(1)"
+                  >My Order</a
+                >
+              </li>
+              <li>
+                <a
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  (click)="handlClick(2)"
+                  >Admin</a
+                >
+              </li>
+            </ul>
+          </div>
 
           <!-- Cart -->
           <div class="ml-4 flow-root lg:ml-6">
-            <a
-            href="/cart"
-              class="group -m-2 flex items-center p-2"
-            >
+            <a href="/cart" class="group -m-2 flex items-center p-2">
               <svg
                 class="h-6 w-6 flex-shrink-0 text-slate-400 group-hover:text-slate-500"
                 xmlns="http://www.w3.org/2000/svg"

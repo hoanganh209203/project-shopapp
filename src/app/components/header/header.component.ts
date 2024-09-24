@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   activeNaveItem: number = 0;
   userResponse?: UserResponse | null;
   userId: number = 0;
+  roleId: number = 0;
   constructor(
     private cartService: CartService,
     private router: Router,
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
         this.cartService.clearCart(),
           this.tokenService.removeToken(),
           this.userService.removeUserFormLocalStorage();
+        this.router.navigate(['login']);
         break;
       case 1:
         const userData = localStorage.getItem('user');
@@ -61,23 +63,10 @@ export class HeaderComponent implements OnInit {
         }
         break;
       case 2:
+        this.router.navigate(['/admin']);
         break;
     }
   }
-
-  // myOrder() {
-  //   const userData = localStorage.getItem('user'); // Lấy dữ liệu user từ localStorage
-  //   if (userData) {
-  //     const user = JSON.parse(userData); // Chuyển đổi chuỗi JSON thành object
-  //     this.userId = user.id;
-
-  //     // Điều hướng đến trang 'order_user/:iduser'
-  //     this.router.navigate([`/order_user/${this.userId}`]);
-  //   } else {
-  //     // Xử lý trường hợp không có dữ liệu người dùng trong localStorage
-  //     console.error('User data not found in localStorage');
-  //   }
-  // }
 
   setActiveNavItem(index: number) {
     this.activeNaveItem = index;

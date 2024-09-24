@@ -1,7 +1,14 @@
 import { NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  NgForm,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { error } from 'console';
 import { UserService } from '../../service/auth/user.service';
@@ -10,13 +17,12 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, NgIf,ReactiveFormsModule],
+  imports: [FormsModule, NgIf, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  loginForm!: FormGroup;
   isLoading: boolean = false;
   constructor(
     private fb: FormBuilder,
@@ -27,17 +33,20 @@ export class RegisterComponent implements OnInit{
 
   ngOnInit() {
     this.isLoading = true;
-    this.registerForm = this.fb.group({
-      fullName: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-      address: [''],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      retypePassword: ['', Validators.required],
-      dateOfBirth: [
-        new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
-        Validators.required,
-      ],
-    }, { validators: this.checkPasswordMatch });
+    this.registerForm = this.fb.group(
+      {
+        fullName: ['', Validators.required],
+        phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
+        address: [''],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        retypePassword: ['', Validators.required],
+        dateOfBirth: [
+          new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
+          Validators.required,
+        ],
+      },
+      { validators: this.checkPasswordMatch }
+    );
   }
 
   register() {
@@ -59,19 +68,22 @@ export class RegisterComponent implements OnInit{
 
     this.userService.register(registerType).subscribe({
       next: (response: any) => {
-        this.toastr.success('Register Successfully', 'Register',{
+        this.toastr.success('Register Successfully', 'Register', {
           timeOut: 3000,
-         });
+        });
         this.router.navigate(['login']);
-
       },
       complete: () => {
         console.log('Registration process completed.');
       },
       error: (error: any) => {
-        this.toastr.success(`Cannot register, error :${error.error}`, 'Register',{
-          timeOut: 3000,
-         });
+        this.toastr.success(
+          `Cannot register, error :${error.error}`,
+          'Register',
+          {
+            timeOut: 3000,
+          }
+        );
       },
     });
   }
@@ -89,7 +101,10 @@ export class RegisterComponent implements OnInit{
       const today = new Date();
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
         age--;
       }
 

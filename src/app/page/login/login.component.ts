@@ -73,21 +73,26 @@ export class LoginComponent implements OnInit {
             //   google_account_id: response.google_account_id,
             //   date_of_brith: new Date(response.date_of_brith),
             // };
-            let userResponse : UserResponse = {
+            let userResponse: UserResponse = {
               id: response.id,
               fullname: response.fullname,
               phone_number: response.phone_number,
               address: response.address,
               date_of_brith: new Date(response.date_of_brith),
               facebook_account_id: response.facebook_account_id,
-              google_account_id: response.google_account_id
-            }
+              google_account_id: response.google_account_id,
+              role_id: response.role_id,
+            };
             this.userService.saveUserResponseToLocalStorage(userResponse);
             this.toastr.success('SignIn Successfully', 'Signin', {
               timeOut: 3000,
             });
             this.isLoading = true;
-            this.router.navigate(['home']);
+            if (response.role_id == 2) {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['home']);
+            }
             this.isLoading = false;
           },
           complete: () => {
