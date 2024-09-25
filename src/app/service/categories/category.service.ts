@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CategoryResponse } from '../../interfaces/category.response';
 
@@ -12,10 +12,33 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getCategories(page: number, limit: number): Observable<CategoryResponse[]> {
-    debugger
+    debugger;
     const params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
     return this.http.get<CategoryResponse[]>(this.apiCategory, { params });
+  }
+
+  categoryById(categoryId: number): Observable<CategoryResponse> {
+    return this.http.get<CategoryResponse>(`${this.apiCategory}/${categoryId}`);
+  }
+
+  createCategory(formData: FormData): Observable<any> {
+    debugger;
+    return this.http.post(this.apiCategory, formData, {
+      responseType: 'text',
+    });
+  }
+
+  updateCategory(categoryId: number, formData: FormData): Observable<any> {
+    debugger;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put(`${this.apiCategory}/${categoryId}`, formData, {
+      headers,
+      responseType: 'text',
+    });
   }
 }

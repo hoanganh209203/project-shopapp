@@ -81,7 +81,7 @@ export class CreateProductComponent implements OnInit {
     formData.append('price', this.product.price.toString());
     formData.append('description', this.product.description);
     formData.append('categoryId', this.product.categoryId.toString());
-
+    formData.append('active', '1');
     for (let i = 0; i < this.selectedFiles.length; i++) {
       formData.append('files', this.selectedFiles[i]);
     }

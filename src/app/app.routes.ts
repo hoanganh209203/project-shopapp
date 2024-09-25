@@ -16,11 +16,13 @@ import { ProductByCategoryComponent } from './components/product-by-category/pro
 import { AdminComponent } from './layout/admin/admin.component';
 import { ProductsComponent } from './components/admins/products-admin/products/products.component';
 import { ProductShopComponent } from './components/products/products.component';
-import { CategoriesAdminComponent } from './components/admins/categories/categories.component';
+import { CategoriesAdminComponent } from './components/admins/categories-admin/categories/categories.component';
 import { AdminsComponent } from './page/admins/admins.component';
 import { CreateProductComponent } from './components/admins/products-admin/create-product/create-product.component';
 import { UpdateProductComponent } from './components/admins/products-admin/update-product/update-product.component';
 import { SoftDeletedListComponent } from './components/admins/products-admin/soft-deleted-list/soft-deleted-list.component';
+import { CreateCategoryComponent } from './components/admins/categories-admin/create-category/create-category.component';
+import { UpdateCategoryComponent } from './components/admins/categories-admin/update-category/update-category.component';
 
 export const routes: Routes = [
   {
@@ -101,7 +103,7 @@ export const routes: Routes = [
         path: 'dashboard',
         component: AdminsComponent,
       },
-      //products
+      //admin products
       {
         path: 'products',
         component: ProductsComponent,
@@ -118,9 +120,18 @@ export const routes: Routes = [
         path: 'list-soft-deleted',
         component: SoftDeletedListComponent,
       },
+      // admin Category
       {
         path: 'category',
         component: CategoriesAdminComponent,
+      },
+      {
+        path: 'add-category',
+        component: CreateCategoryComponent,
+      },
+      {
+        path: 'update-category/:id',
+        component: UpdateCategoryComponent,
       },
     ],
   },

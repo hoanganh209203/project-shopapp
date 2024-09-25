@@ -28,11 +28,12 @@
             <th
               class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
             >
-              <button
+              <a
+                routerLink="/admin/add-category"
                 class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
               >
                 Create
-              </button>
+              </a>
             </th>
           </tr>
         </thead>
@@ -66,7 +67,11 @@
                   aria-hidden
                   class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                 ></span>
-                <span class="relative">Activo</span>
+                <span class="relative">
+                  <a [routerLink]="['/admin/update-category', category.id]">
+                    Edit
+                  </a>
+                </span>
               </span>
             </td>
           </tr>

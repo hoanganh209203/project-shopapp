@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CategoryResponse } from '../../../interfaces/category.response';
-import { CategoryService } from '../../../service/categories/category.service';
+import { CategoryResponse } from '../../../../interfaces/category.response';
+import { CategoryService } from '../../../../service/categories/category.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
