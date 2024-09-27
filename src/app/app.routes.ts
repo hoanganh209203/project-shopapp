@@ -1,21 +1,21 @@
 import { Routes } from '@angular/router';
 import { HomepageComponent } from './page/homepage/homepage.component';
 import { HomeComponent } from './layout/home/home.component';
-import { DetailProductComponent } from './components/detail-product/detail-product.component';
-import { CartProductComponent } from './components/cart-product/cart-product.component';
-import { OrderComponent } from './components/order/order.component';
+import { DetailProductComponent } from './components/clients/detail-product/detail-product.component';
+import { CartProductComponent } from './components/clients/cart-product/cart-product.component';
+import { OrderComponent } from './components/orders/order/order.component';
 import { LoginComponent } from './page/login/login.component';
 import { RegisterComponent } from './page/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TestToastComponent } from './components/test-toast/test-toast.component';
-import { OrderDetailComponent } from './components/order-detail/order-detail.component';
-import { ShowCategoryComponent } from './components/show-category/show-category.component';
-import { OrderUserIdComponent } from './components/order-user-id/order-user-id.component';
-import { CategoryPageComponent } from './components/category-page/category-page.component';
-import { ProductByCategoryComponent } from './components/product-by-category/product-by-category.component';
+import { OrderDetailComponent } from './components/orders/order-detail/order-detail.component';
+import { ShowCategoryComponent } from './components/clients/show-category/show-category.component';
+import { OrderUserIdComponent } from './components/orders/order-user-id/order-user-id.component';
+import { CategoryPageComponent } from './components/clients/category-page/category-page.component';
+import { ProductByCategoryComponent } from './components/clients/product-by-category/product-by-category.component';
 import { AdminComponent } from './layout/admin/admin.component';
 import { ProductsComponent } from './components/admins/products-admin/products/products.component';
-import { ProductShopComponent } from './components/products/products.component';
+import { ProductShopComponent } from './components/clients/products/products.component';
 import { CategoriesAdminComponent } from './components/admins/categories-admin/categories/categories.component';
 import { AdminsComponent } from './page/admins/admins.component';
 import { CreateProductComponent } from './components/admins/products-admin/create-product/create-product.component';
@@ -23,6 +23,8 @@ import { UpdateProductComponent } from './components/admins/products-admin/updat
 import { SoftDeletedListComponent } from './components/admins/products-admin/soft-deleted-list/soft-deleted-list.component';
 import { CreateCategoryComponent } from './components/admins/categories-admin/create-category/create-category.component';
 import { UpdateCategoryComponent } from './components/admins/categories-admin/update-category/update-category.component';
+import { UserListComponent } from './components/admins/user-admin/user-list/user-list.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -92,11 +94,12 @@ export const routes: Routes = [
   // },
   {
     path: 'admin',
+    canActivate: [authGuard],
     component: AdminComponent,
     children: [
       {
         path: '',
-        redirectTo: '/admin/dashboard',
+        redirectTo: 'admin/dashboard',
         pathMatch: 'full',
       },
       {
@@ -132,6 +135,11 @@ export const routes: Routes = [
       {
         path: 'update-category/:id',
         component: UpdateCategoryComponent,
+      },
+      //User admin
+      {
+        path: 'list-user',
+        component: UserListComponent,
       },
     ],
   },

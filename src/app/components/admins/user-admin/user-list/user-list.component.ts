@@ -1,70 +1,63 @@
-import { Component } from '@angular/core';
-import { CategoryResponse } from '../../interfaces/category.response';
-import { CategoryService } from '../../service/categories/category.service';
-import { ToastrService } from 'ngx-toastr';
-import { Router, RouterLink } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { UserResponse } from '../../../../interfaces/user.response';
+import { UserService } from '../../../../service/auth/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-category-page',
+  selector: 'app-user-list',
   standalone: true,
-  imports: [NgFor,NgClass,NgIf,RouterLink
-  ],
-  templateUrl: './category-page.component.html',
-  styleUrl: './category-page.component.scss',
+  imports: [NgFor, NgClass, NgIf, RouterLink],
+  templateUrl: './user-list.component.html',
+  styleUrl: './user-list.component.scss',
 })
-export class CategoryPageComponent {
-  categories: CategoryResponse[] = [];
+export class UserListComponent {
+  users: UserResponse[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 10;
   page: number[] = [];
   totalPages: number = 0;
   visiblePages: number[] = [];
   isLoading: boolean = false;
+
   constructor(
-    private categoryService: CategoryService,
+    private userService: UserService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
-  ngOnInit():void{
-    this.isLoading = true,
-    this.getCategory(1,10)
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.getUser(this.currentPage, this.itemsPerPage);
   }
 
-  getCategory(page:number , limit:number){
-    this.categoryService.getCategories(page,limit).subscribe({
-      next:(response : any)=>{
-        response.category.forEach((category:CategoryResponse) => {
-          category.url_image = `${environment.apiBaseUrl}/categories/images/${category.thumnail}`;
+  getUser(page: number, limit: number) {
+    this.userService.getAllUser(page, limit).subscribe({
+      next: (response: any) => {
+        this.toastr.success('List User Successfully', 'User', {
+          timeOut: 2000,
         });
-        this.categories = response.category;
-
-        this.totalPages = response.totalPages;
+        this.users = response.user;
         this.visiblePages = this.generateVisiblePageArry(
           this.currentPage,
           this.totalPages
-        )
+        );
         this.isLoading = false;
       },
-      complete:()=>{
+      complete: () => {
         console.log(123);
       },
-      error:(error:any)=>{
-        console.error("Error get category",error);
-
-      }
-    })
+      error: (error: any) => {
+        console.error('Error get category', error);
+      },
+    });
   }
   onPageChange(page: number, event: MouseEvent) {
     this.isLoading = true;
     event.preventDefault();
     this.currentPage = page;
-    this.getCategory(
-      this.currentPage,
-      this.itemsPerPage
-    );
+    this.getUser(this.currentPage, this.itemsPerPage);
     this.isLoading = false;
   }
 

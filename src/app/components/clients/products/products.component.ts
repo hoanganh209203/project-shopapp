@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { ProductResponse } from '../../interfaces/product.response';
-import { CategoryResponse } from '../../interfaces/category.response';
-import { ProductService } from '../../service/products/product.service';
-import { CategoryService } from '../../service/categories/category.service';
+import { ProductResponse } from '../../../interfaces/product.response';
+import { CategoryResponse } from '../../../interfaces/category.response';
+import { ProductService } from '../../../service/products/product.service';
+import { CategoryService } from '../../../service/categories/category.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-products',

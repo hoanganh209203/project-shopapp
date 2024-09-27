@@ -6,12 +6,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ProductResponse } from '../../interfaces/product.response';
-import { CartService } from '../../service/carts/cart.service';
-import { ProductService } from '../../service/products/product.service';
-import { OrderService } from '../../service/orders/order.service';
-import { OrderType } from '../../dtos/orders/orders.dto';
-import { environment } from '../../environments/environment';
+import { ProductResponse } from '../../../interfaces/product.response';
+import { CartService } from '../../../service/carts/cart.service';
+import { ProductService } from '../../../service/products/product.service';
+import { OrderService } from '../../../service/orders/order.service';
+import { OrderType } from '../../../dtos/orders/orders.dto';
+import { environment } from '../../../environments/environment';
 import { CommonModule, NgFor } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -29,7 +29,7 @@ export class OrderComponent implements OnInit {
   couponCode: string = ''; //Mã giảm giá
   totalAmont: number = 0;
   orderData: OrderType = {
-    user_id: 1,
+    user_id: 0,
     fullname: '',
     email: '',
     phone_number: '',
@@ -37,11 +37,10 @@ export class OrderComponent implements OnInit {
     note: '',
     total_money: 0,
     payment_method: 'cod',
-    shipping_address:'',
+    shipping_address: '',
     shipping_method: 'express',
     coupon_code: '',
     cart_items: [],
-
   };
   totalPrice: number = 0;
   isLoading: boolean = false;
@@ -52,17 +51,20 @@ export class OrderComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.buildForm();
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.orderData.user_id = user.id;
+    }
     const cart = this.cartService.getCart();
     const productIds = Array.from(cart.keys());
     this.calculateTotal();
-    if(productIds.length === 0) {
+    if (productIds.length === 0) {
       return;
     }
     this.productService.getProductsByIds(productIds).subscribe({
@@ -81,75 +83,77 @@ export class OrderComponent implements OnInit {
         this.isLoading = false;
       },
       complete() {
-
         console.log(123);
       },
       error: (err) => {
-        this.toastr.error('Error fetching product details', err,{
+        this.toastr.error('Error fetching product details', err, {
           timeOut: 3000,
-         });
-         this.isLoading = false;
+        });
+        this.isLoading = false;
       },
     });
-  };
+  }
 
-  buildForm () {
+  buildForm() {
     this.orderForm = this.fb.group({
       fullname: ['', Validators.required],
       email: ['', [Validators.email]],
       phone_number: ['', [Validators.required, Validators.minLength(9)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
       note: [''],
-      shipping_address:'',
+      shipping_address: '',
       shipping_method: ['express'],
       payment_method: ['cod'],
     });
   }
 
-placeOrder() {
-  if (this.orderForm.valid) {
-    // Chuyển đổi các mục trong giỏ hàng thành định dạng phù hợp cho order_detail
-    const cartItems = this.cartItems.map(item => ({
-      product_id: item.product.id,
-      quantity: item.quantity,
-      price: item.product.price
-    }));
+  placeOrder() {
+    if (this.orderForm.valid) {
+      // Chuyển đổi các mục trong giỏ hàng thành định dạng phù hợp cho order_detail
+      const cartItems = this.cartItems.map((item) => ({
+        product_id: item.product.id,
+        quantity: item.quantity,
+        price: item.product.price,
+      }));
 
-    this.orderData = {
-      ...this.orderData,
-      ...this.orderForm.value,
-      total_money: this.totalPrice,
-      cart_items: cartItems, // Cập nhật các mục trong giỏ hàng vào orderData
-    };
+      this.orderData = {
+        ...this.orderData,
+        ...this.orderForm.value,
+        total_money: this.totalPrice,
+        cart_items: cartItems, // Cập nhật các mục trong giỏ hàng vào orderData
+      };
 
-    this.orderService.createOrder(this.orderData).subscribe({
-      next: (response: any) => {
-        this.isLoading = true;
-        const orderId = response.id;
-        this.toastr.success('Order Products Successfully', 'Order Product', {
+      this.orderService.createOrder(this.orderData).subscribe({
+        next: (response: any) => {
+          this.isLoading = true;
+          const orderId = response.id;
+          this.toastr.success('Order Products Successfully', 'Order Product', {
+            timeOut: 3000,
+          });
+          this.router.navigate([`/order_detail/${orderId}`]);
+          this.isLoading = false;
+        },
+
+        complete: () => {
+          this.calculateTotal();
+        },
+
+        error: (err) => {
+          this.toastr.error('Error fetching product details', err, {
+            timeOut: 3000,
+          });
+        },
+      });
+    } else {
+      this.toastr.error(
+        'Dữ liệu không hợp lệ vui lòng kiểm tra lại',
+        'Order Error',
+        {
           timeOut: 3000,
-        });
-        this.router.navigate([`/order_detail/${orderId}`]);
-        this.isLoading = false;
-      },
-
-      complete: () => {
-        this.calculateTotal();
-      },
-
-      error: (err) => {
-        this.toastr.error('Error fetching product details', err, {
-          timeOut: 3000,
-        });
-      },
-    });
-  } else {
-    this.toastr.error('Dữ liệu không hợp lệ vui lòng kiểm tra lại', 'Order Error', {
-      timeOut: 3000,
-    });
+        }
+      );
+    }
   }
-}
-
 
   //Hàm tính tổng tiền
   calculateTotal(): void {

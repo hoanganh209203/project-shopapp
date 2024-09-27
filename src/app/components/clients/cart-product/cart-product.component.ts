@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ProductResponse } from '../../interfaces/product.response';
-import { ProductService } from '../../service/products/product.service';
-import { CartService } from '../../service/carts/cart.service';
-import { environment } from '../../environments/environment';
+import { ProductResponse } from '../../../interfaces/product.response';
+import { ProductService } from '../../../service/products/product.service';
+import { CartService } from '../../../service/carts/cart.service';
+import { environment } from '../../../environments/environment';
 import { CommonModule, NgFor } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
@@ -11,9 +11,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-cart-product',
   standalone: true,
-  imports: [NgFor, CommonModule,FormsModule],
+  imports: [NgFor, CommonModule, FormsModule],
   templateUrl: './cart-product.component.html',
-  styleUrls: ['./cart-product.component.scss']
+  styleUrls: ['./cart-product.component.scss'],
 })
 export class CartProductComponent implements OnInit {
   totalPrice: number = 0;
@@ -30,7 +30,6 @@ export class CartProductComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.loadCartItems();
-
   }
 
   loadCartItems(): void {
@@ -48,7 +47,7 @@ export class CartProductComponent implements OnInit {
 
           return {
             product: product!,
-            quantity: cart.get(productId) ?? 0
+            quantity: cart.get(productId) ?? 0,
           };
         });
         this.updateTotalPrice();
@@ -56,28 +55,26 @@ export class CartProductComponent implements OnInit {
       },
       error: (err: any) => {
         this.toastr.warning('Order Error', 'Order Product', { timeOut: 3000 });
-        console.error("Error fetching product details", err);
+        console.error('Error fetching product details', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 
   increaseQuantity(productId: number): void {
-
-    const item = this.cartItems.find(i => i.product.id === productId);
+    const item = this.cartItems.find((i) => i.product.id === productId);
     if (item && item.quantity <= 19) {
-        item.quantity++;
-        this.cartService.updateCart(productId, item.quantity); // Cập nhật giỏ hàng
-        this.updateLocalStorage(); // Cập nhật localStorage
-        this.updateTotalPrice(); // Cập nhật tổng tiền
-      }else{
-        this.toastr.error('Quantity Cart is limit 20', 'Cart', { timeOut: 3000 });
-      }
+      item.quantity++;
+      this.cartService.updateCart(productId, item.quantity); // Cập nhật giỏ hàng
+      this.updateLocalStorage(); // Cập nhật localStorage
+      this.updateTotalPrice(); // Cập nhật tổng tiền
+    } else {
+      this.toastr.error('Quantity Cart is limit 20', 'Cart', { timeOut: 3000 });
+    }
   }
 
   decreaseQuantity(productId: number): void {
-
-    const item = this.cartItems.find(i => i.product.id === productId);
+    const item = this.cartItems.find((i) => i.product.id === productId);
     if (item && item.quantity > 1) {
       item.quantity--;
       this.cartService.updateCart(productId, item.quantity); // Cập nhật giỏ hàng
@@ -92,32 +89,31 @@ export class CartProductComponent implements OnInit {
       this.cartService.removeFromCart(productId); // Xóa sản phẩm
       this.loadCartItems(); // Cập nhật lại giỏ hàng
       this.updateTotalPrice(); // Cập nhật lại tổng tiền
-      this.toastr.info('Removed product from cart', 'Delete Cart', { timeOut: 3000 });
+      this.toastr.info('Removed product from cart', 'Delete Cart', {
+        timeOut: 3000,
+      });
     }
   }
 
-
   updateLocalStorage(): void {
-    debugger
+    debugger;
     const cart = new Map<number, number>(); // Sử dụng Map để lưu trữ id sản phẩm và số lượng
-    this.cartItems.forEach(item => {
+    this.cartItems.forEach((item) => {
       cart.set(item.product.id, item.quantity);
     });
     localStorage.setItem('cart', JSON.stringify(Array.from(cart.entries())));
   }
 
   updateTotalPrice(): void {
-
     this.cartService.getTotalPrice().subscribe({
       next: (price) => {
         this.totalPrice = price;
       },
       error: (err) => {
-        console.error("Error fetching total price", err);
-      }
+        console.error('Error fetching total price', err);
+      },
     });
   }
-
 
   orderPlace() {
     this.router.navigate(['/order']); // Điều hướng tới trang chi tiết

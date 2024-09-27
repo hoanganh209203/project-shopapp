@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductResponse } from '../../interfaces/product.response';
-import { ProductService } from '../../service/products/product.service';
-import { ProductImage } from '../../interfaces/productImage';
-import { environment } from '../../environments/environment';
+import { ProductResponse } from '../../../interfaces/product.response';
+import { ProductService } from '../../../service/products/product.service';
+import { ProductImage } from '../../../interfaces/productImage';
+import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
-import { CartService } from '../../service/carts/cart.service';
+import { CartService } from '../../../service/carts/cart.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 

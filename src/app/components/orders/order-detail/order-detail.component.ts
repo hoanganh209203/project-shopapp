@@ -1,9 +1,9 @@
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { OrderTypeResponse } from '../../interfaces/orderType.response';
-import { OrderService } from '../../service/orders/order.service';
-import { OrderDetail } from '../../interfaces/orderDetail.response';
-import { environment } from '../../environments/environment';
+import { OrderTypeResponse } from '../../../interfaces/orderType.response';
+import { OrderService } from '../../../service/orders/order.service';
+import { OrderDetail } from '../../../interfaces/orderDetail.response';
+import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -33,7 +33,11 @@ export class OrderDetailComponent implements OnInit {
   };
   totalOrderAmount: number = 0;
   orderId: number = 0;
-  constructor(private orderService: OrderService, private router: Router,private route: ActivatedRoute) {}
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -108,7 +112,7 @@ export class OrderDetailComponent implements OnInit {
   toggleModal(): void {
     this.isModalOpen = !this.isModalOpen;
   }
-  navigate(){
+  navigate() {
     this.router.navigate(['/']);
   }
 }

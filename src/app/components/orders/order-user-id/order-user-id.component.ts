@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { UserOrderResponse } from '../../interfaces/userOrder.response';
-import { OrderService } from '../../service/orders/order.service';
+import { UserOrderResponse } from '../../../interfaces/userOrder.response';
+import { OrderService } from '../../../service/orders/order.service';
 import { Router } from 'express';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { OrderDetail } from '../../interfaces/orderDetail.response';
-import { environment } from '../../environments/environment';
+import { OrderDetail } from '../../../interfaces/orderDetail.response';
+import { environment } from '../../../environments/environment';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-order-user-id',
   standalone: true,
-  imports: [NgIf, NgFor, CommonModule,RouterLink],
+  imports: [NgIf, NgFor, CommonModule, RouterLink],
   templateUrl: './order-user-id.component.html',
   styleUrl: './order-user-id.component.scss',
 })

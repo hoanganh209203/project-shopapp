@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BannerComponent } from '../../components/banner/banner.component';
+import { BannerComponent } from '../../components/clients/banner/banner.component';
 import { ProductService } from '../../service/products/product.service';
 import { environment } from '../../environments/environment';
 import { ProductResponse } from '../../interfaces/product.response';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../service/carts/cart.service';
 import { ToastrService } from 'ngx-toastr';
-import { ShowCategoryComponent } from "../../components/show-category/show-category.component";
+import { ShowCategoryComponent } from '../../components/clients/show-category/show-category.component';
 
 @Component({
   selector: 'app-homepage',
@@ -25,9 +25,8 @@ import { ShowCategoryComponent } from "../../components/show-category/show-categ
     FormsModule,
     RouterLink,
     ShowCategoryComponent,
-    CommonModule
-
-],
+    CommonModule,
+  ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
 })
@@ -62,15 +61,14 @@ export class HomepageComponent implements OnInit {
   }
 
   getCategories(page: number, limit: number) {
-    debugger
+    debugger;
     this.categoryService.getCategories(page, limit).subscribe({
       next: (response: any) => {
         this.categories = response.category;
       },
-      complete:()=>{
-      },
+      complete: () => {},
       error: (err: any) => {
-        debugger
+        debugger;
         console.log('Error fetching categories', err);
       },
     });

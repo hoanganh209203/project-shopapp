@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ProductResponse } from '../../interfaces/product.response';
-import { ProductService } from '../../service/products/product.service';
+import { ProductResponse } from '../../../interfaces/product.response';
+import { ProductService } from '../../../service/products/product.service';
 import { ToastrService } from 'ngx-toastr';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 
@@ -60,7 +60,8 @@ export class ProductByCategoryComponent {
         this.totalPages = response.totalPages;
         this.visiblePages = this.generateVisiblePageArry(
           this.currentPage,
-          this.totalPages);
+          this.totalPages
+        );
         this.isLoading = false;
       },
       error: (err: any) => {
