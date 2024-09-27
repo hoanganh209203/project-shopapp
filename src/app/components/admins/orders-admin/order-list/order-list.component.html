@@ -1,0 +1,212 @@
+<!-- component -->
+<div class="bg-white p-8 rounded-md w-full">
+  <div class="flex items-center justify-between pb-6">
+    <div class="flex justify-between items-center">
+      <h2 class="text-gray-600 font-semibold">Order List</h2>
+    </div>
+  </div>
+  <div class="">
+    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+      <table class="min-w-full leading-normal">
+        <thead class="min-w-full">
+          <tr>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              #
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Name
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Phone
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Email
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Address
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Total Money
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Status
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Ordet date
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Payment
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <a
+                class="btn btn-default btn-xs"
+                [routerLink]="['/admin/order-detail-admin', order.id]"
+              >
+                {{ order.id }}
+              </a>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                <a
+                  class="btn btn-default btn-xs"
+                  [routerLink]="['/admin/order-detail-admin', order.id]"
+                >
+                  {{ order.fullname }}
+                </a>
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ order.phone_number }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p
+                class="text-gray-900 whitespace-no-wrap line-clamp-3 overflow-hidden text-ellipsis"
+              >
+                {{ order.email }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ order.address }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ order.total_money | currency : "VND" : "symbol" : "1.0-0" }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p
+                [ngClass]="{
+                  'bg-yellow-400': order.status === 'pending',
+                  'bg-blue-400': order.status === 'processing',
+                  'bg-purple-400': order.status === 'shipped',
+                  'bg-green-400': order.status === 'delivered',
+                  'bg-red-400': order.status === 'cancelled'
+                }"
+                class="whitespace-no-wrap text-white flex justify-center items-center w-20 h-8 rounded font-semibold border"
+              >
+                {{ order.status }}
+              </p>
+            </td>
+            <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ order.order_date }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <p class="text-gray-900 whitespace-no-wrap">
+                {{ order.payment_method }}
+              </p>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <div class="flex justify-center items-center gap-2">
+                <span
+                  class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
+                >
+                  <span
+                    aria-hidden
+                    class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                  ></span>
+                  <a
+                    [routerLink]="['/admin/up-order', order.id]"
+                    class="relative"
+                    >Edit</a
+                  >
+                </span>
+                <span
+                  class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight"
+                >
+                  <span
+                    aria-hidden
+                    class="absolute inset-0 bg-red-200 opacity-50 rounded-full"
+                  ></span>
+                  <a class="relative">Delete</a>
+                </span>
+              </div>
+            </td>
+            <!-- <td class="py-5 border-b border-gray-200 bg-white text-sm">
+
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flex justify-center items-center p-10">
+        <ul class="pagination flex items-center space-x-2">
+          <li *ngIf="currentPage > 1">
+            <a
+              href="#"
+              (click)="onPageChange(1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >First</a
+            >
+          </li>
+          <li *ngIf="currentPage > 1">
+            <a
+              href="#"
+              (click)="onPageChange(currentPage - 1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Previous</a
+            >
+          </li>
+          <ng-container *ngFor="let page of visiblePages">
+            <li [ngClass]="{ 'bg-blue-500 text-white': page === currentPage }">
+              <a
+                href="#"
+                (click)="onPageChange(page, $event)"
+                class="page-link px-3 py-1 rounded"
+                >{{ page }}</a
+              >
+            </li>
+          </ng-container>
+          <li *ngIf="currentPage < totalPages">
+            <a
+              href="#"
+              (click)="onPageChange(currentPage + 1, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Next</a
+            >
+          </li>
+          <li *ngIf="currentPage < totalPages">
+            <a
+              href="#"
+              (click)="onPageChange(totalPages, $event)"
+              class="page-link bg-gray-200 hover:bg-gray-300 rounded px-3 py-1"
+              >Last</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

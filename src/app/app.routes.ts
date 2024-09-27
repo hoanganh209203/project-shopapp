@@ -25,6 +25,8 @@ import { CreateCategoryComponent } from './components/admins/categories-admin/cr
 import { UpdateCategoryComponent } from './components/admins/categories-admin/update-category/update-category.component';
 import { UserListComponent } from './components/admins/user-admin/user-list/user-list.component';
 import { authGuard } from './guards/auth.guard';
+import { OrderListComponent } from './components/admins/orders-admin/order-list/order-list.component';
+import { OrderDetailAdminComponent } from './components/admins/orders-admin/order-detail-admin/order-detail-admin.component';
 
 export const routes: Routes = [
   {
@@ -140,6 +142,15 @@ export const routes: Routes = [
       {
         path: 'list-user',
         component: UserListComponent,
+      },
+      //Order admin
+      {
+        path: 'order-list',
+        component: OrderListComponent,
+      },
+      {
+        path: 'order-detail-admin/:id',
+        component: OrderDetailAdminComponent,
       },
     ],
   },

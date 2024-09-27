@@ -1,121 +1,126 @@
-<form
-  [formGroup]="updateForm"
-  (ngSubmit)="onSubmit()"
-  enctype="multipart/form-data"
-  class="space-y-6"
->
-  <!-- Name field -->
-  <div class="flex flex-col">
-    <label for="name" class="font-semibold text-gray-700">Product Name</label>
-    <input
-      type="text"
-      id="name"
-      class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      formControlName="name"
-    />
-    <div
-      *ngIf="updateForm.get('name')?.invalid && updateForm.get('name')?.touched"
-      class="text-red-600 text-sm"
-    >
-      Product name is required
-    </div>
-  </div>
-
-  <!-- Price field -->
-  <div class="flex flex-col">
-    <label for="price" class="font-semibold text-gray-700">Price</label>
-    <input
-      type="number"
-      id="price"
-      class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      formControlName="price"
-    />
-    <div
-      *ngIf="
-        updateForm.get('price')?.invalid && updateForm.get('price')?.touched
-      "
-      class="text-red-600 text-sm"
-    >
-      Price is required
-    </div>
-  </div>
-
-  <!-- Description field -->
-  <div class="flex flex-col">
-    <label for="description" class="font-semibold text-gray-700"
-      >Description</label
-    >
-    <textarea
-      id="description"
-      class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      formControlName="description"
-    ></textarea>
-    <div
-      *ngIf="
-        updateForm.get('description')?.invalid &&
-        updateForm.get('description')?.touched
-      "
-      class="text-red-600 text-sm"
-    >
-      Description is required
-    </div>
-  </div>
-
-  <!-- Category field (Dropdown) -->
-  <div class="flex flex-col">
-    <label for="category" class="font-semibold text-gray-700">Category</label>
-    <select
-      id="category"
-      class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      formControlName="categoryId"
-    >
-      <option *ngFor="let category of categories" [value]="category.id">
-        {{ category.name }}
-      </option>
-    </select>
-    <div
-      *ngIf="
-        updateForm.get('categoryId')?.invalid &&
-        updateForm.get('categoryId')?.touched
-      "
-      class="text-red-600 text-sm"
-    >
-      Category is required
-    </div>
-  </div>
-
-  <!-- Image Upload field -->
-  <div class="flex flex-col">
-    <label for="images" class="font-semibold text-gray-700"
-      >Upload Images</label
-    >
-    <input
-      type="file"
-      (change)="onFileChange($event)"
-      multiple
-      class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-    />
-  </div>
-
-  <!-- Existing Images Display -->
-  <div *ngIf="existingImages.length > 0">
-    <div class="grid grid-cols-3 gap-4">
-      <div *ngFor="let image of existingImages">
-        <img
-          [src]="image"
-          alt="Existing Image"
-          class="w-full h-52 object-cover rounded-md"
-        />
+<div class="p-16">
+  <h1 class="text-center text-2xl font-bold mb-10">Update Product</h1>
+  <form
+    [formGroup]="updateForm"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+    class="space-y-6"
+  >
+    <!-- Name field -->
+    <div class="flex flex-col">
+      <label for="name" class="font-semibold text-gray-700">Product Name</label>
+      <input
+        type="text"
+        id="name"
+        class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        formControlName="name"
+      />
+      <div
+        *ngIf="
+          updateForm.get('name')?.invalid && updateForm.get('name')?.touched
+        "
+        class="text-red-600 text-sm"
+      >
+        Product name is required
       </div>
     </div>
-  </div>
 
-  <!-- Submit button -->
-  <button
-    type="submit"
-    class="w-full bg-blue-500 text-white font-semibold py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    [disabled]="updateForm.invalid"
-  >
-    Update Product
-  </button>
-</form>
+    <!-- Price field -->
+    <div class="flex flex-col">
+      <label for="price" class="font-semibold text-gray-700">Price</label>
+      <input
+        type="number"
+        id="price"
+        class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        formControlName="price"
+      />
+      <div
+        *ngIf="
+          updateForm.get('price')?.invalid && updateForm.get('price')?.touched
+        "
+        class="text-red-600 text-sm"
+      >
+        Price is required
+      </div>
+    </div>
+
+    <!-- Description field -->
+    <div class="flex flex-col">
+      <label for="description" class="font-semibold text-gray-700"
+        >Description</label
+      >
+      <textarea
+        id="description"
+        class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        formControlName="description"
+      ></textarea>
+      <div
+        *ngIf="
+          updateForm.get('description')?.invalid &&
+          updateForm.get('description')?.touched
+        "
+        class="text-red-600 text-sm"
+      >
+        Description is required
+      </div>
+    </div>
+
+    <!-- Category field (Dropdown) -->
+    <div class="flex flex-col">
+      <label for="category" class="font-semibold text-gray-700">Category</label>
+      <select
+        id="category"
+        class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        formControlName="categoryId"
+      >
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          updateForm.get('categoryId')?.invalid &&
+          updateForm.get('categoryId')?.touched
+        "
+        class="text-red-600 text-sm"
+      >
+        Category is required
+      </div>
+    </div>
+
+    <!-- Image Upload field -->
+    <div class="flex flex-col">
+      <label for="images" class="font-semibold text-gray-700"
+        >Upload Images</label
+      >
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        multiple
+        class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <!-- Existing Images Display -->
+    <div *ngIf="existingImages.length > 0">
+      <div class="grid grid-cols-3 gap-4">
+        <div *ngFor="let image of existingImages">
+          <img
+            [src]="image"
+            alt="Existing Image"
+            class="w-full h-52 object-cover rounded-md"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white font-semibold py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      [disabled]="updateForm.invalid"
+    >
+      Update Product
+    </button>
+  </form>
+</div>

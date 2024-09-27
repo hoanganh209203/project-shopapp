@@ -16,7 +16,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class OrderDetailComponent implements OnInit {
   orderTypeResponse: OrderTypeResponse = {
     id: 0,
-    user_id: 0,
     fullname: '',
     phone_number: '',
     email: '',

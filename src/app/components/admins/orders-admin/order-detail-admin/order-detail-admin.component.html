@@ -1,0 +1,491 @@
+<main class="py-10">
+  <div *ngIf="orderDetailAdmin">
+    <div class="flex px-4 sm:px-6 lg:px-8">
+      <div class="mr-2 flex-shrink-0">
+        <a routerLink="/admin/order-list" class="btn btn-default btn-xs">
+          <svg
+            class="w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </a>
+      </div>
+      <div class="mt-0.5">
+        <div class="sm:flex sm:items-center sm:space-x-3">
+          <h1 class="text-2xl font-medium leading-none text-slate-900">
+            <font style="vertical-align: inherit"
+              ><font style="vertical-align: inherit">
+                Đặt hàng: # {{ orderDetailAdmin.id }}</font
+              >
+            </font>
+          </h1>
+        </div>
+
+        <div class="mt-2 flex items-center text-sm text-slate-500">
+          <span
+            ><font style="vertical-align: inherit"
+              ><font style="vertical-align: inherit">{{
+                orderDetailAdmin.order_date
+              }}</font></font
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="grid grid-cols-3 gap-6">
+        <div class="col-span-3 xl:col-span-2 space-y-6">
+          <div class="space-y-6">
+            <div
+              class="bg-white shadow-sm ring-1 ring-slate-200 rounded-md sm:rounded-lg"
+            >
+              <div class="px-4 py-5 rounded-t-md sm:px-6 sm:rounded-t-lg">
+                <div
+                  class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap"
+                >
+                  <div class="ml-4 mt-2">
+                    <h3
+                      [ngClass]="{
+                        'text-yellow-700':
+                          orderDetailAdmin.status === 'pending',
+                        'text-blue-700':
+                          orderDetailAdmin.status === 'processing',
+                        'text-purple-700':
+                          orderDetailAdmin.status === 'shipped',
+                        'text-green-700':
+                          orderDetailAdmin.status === 'delivered',
+                        'text-red-500': orderDetailAdmin.status === 'cancelled'
+                      }"
+                      class="text-base uppercase font-medium text-slate-900"
+                    >
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          {{ orderDetailAdmin.status }}
+                        </font></font
+                      >
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-5 sm:px-6 -mx-4 -mt-5 sm:-mx-6">
+                <div class="-mb-5 space-y-6">
+                  <div class="relative overflow-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                      <thead class="border-t border-slate-200 bg-slate-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="px-3 py-3 sm:px-6 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                          ></th>
+                          <th
+                            scope="col"
+                            class="px-3 py-3 sm:px-6 text-center text-xs font-medium text-slate-500 uppercase tracking-wider"
+                          >
+                            <font style="vertical-align: inherit"
+                              ><font style="vertical-align: inherit">
+                                SỐ LƯỢNG
+                              </font></font
+                            >
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-3 py-3 sm:px-6 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
+                          >
+                            <font style="vertical-align: inherit"
+                              ><font style="vertical-align: inherit">
+                                Giá
+                              </font></font
+                            >
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-3 py-3 sm:px-6 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
+                          >
+                            <font style="vertical-align: inherit"
+                              ><font style="vertical-align: inherit">
+                                Tổng cộng
+                              </font></font
+                            >
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-slate-200">
+                        <tr *ngFor="let item of orderDetailAdmin.order_detail">
+                          <td
+                            class="px-3 py-4 sm:px-6 w-full max-w-sm text-sm text-slate-500"
+                          >
+                            <div class="flex items-center">
+                              <div class="h-10 w-10 flex-shrink-0">
+                                <img
+                                  class="h-10 w-10 rounded object-center object-cover"
+                                  [src]="item.product.thumbnail"
+                                  alt="no photo"
+                                />
+                              </div>
+                              <div class="ml-4 max-w-xs flex flex-col">
+                                <div
+                                  class="font-medium text-slate-900 hover:text-sky-600 truncate ..."
+                                >
+                                  <a
+                                    [routerLink]="[
+                                      '/admin/up-product',
+                                      item.product.id
+                                    ]"
+                                    ><font style="vertical-align: inherit"
+                                      ><font style="vertical-align: inherit">{{
+                                        item.product.name
+                                      }}</font></font
+                                    ></a
+                                  >
+                                </div>
+                                <ul
+                                  class="space-x-2 divide-x divide-slate-200 text-slate-500"
+                                ></ul>
+                              </div>
+                            </div>
+                          </td>
+                          <td
+                            class="px-3 py-4 sm:px-6 whitespace-nowrap text-center text-sm text-slate-500 tabular-nums"
+                          >
+                            <font style="vertical-align: inherit"
+                              ><font style="vertical-align: inherit">
+                                {{ item.numberOfProduct }}
+                              </font></font
+                            >
+                          </td>
+                          <td
+                            class="px-3 py-4 sm:px-6 whitespace-nowrap text-right text-sm text-slate-500 tabular-nums"
+                          >
+                            <font style="vertical-align: inherit"
+                              ><font style="vertical-align: inherit">
+                                {{
+                                  item.price
+                                    | currency : "VND" : "symbol" : "1.0-0"
+                                }}
+                              </font></font
+                            >
+                          </td>
+                          <td
+                            class="px-3 py-4 sm:px-6 whitespace-nowrap text-right text-sm text-slate-500 tabular-nums"
+                          >
+                            <font style="vertical-align: inherit"
+                              ><font style="vertical-align: inherit">
+                                {{
+                                  item.price * item.numberOfProduct
+                                    | currency : "VND" : "symbol" : "1.0-0"
+                                }}
+                              </font></font
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livewire Component wire-end:31WYQ5TDKKnh0daywoEs -->
+
+          <div>
+            <div
+              class="bg-white shadow-sm ring-1 ring-slate-200 rounded-md sm:rounded-lg"
+            >
+              <div class="px-4 py-5 rounded-t-md sm:px-6 sm:rounded-t-lg">
+                <div
+                  class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap"
+                >
+                  <div class="ml-4 mt-2">
+                    <h3 class="text-base font-medium text-slate-900">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Sự chi trả
+                        </font></font
+                      >
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-5 sm:px-6 -mx-4 -my-5 sm:-mx-6">
+                <dl class="border-t border-slate-200 divide-y divide-slate-100">
+                  <div
+                    class="flex items-center justify-between p-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                  >
+                    <dt class="text-sm font-medium text-slate-900">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Phương thức thanh toán
+                        </font></font
+                      >
+                    </dt>
+                    <dd
+                      class="text-sm font-medium text-slate-900 tabular-nums sm:col-span-2 sm:text-right"
+                    >
+                      <font style="vertical-align: inherit">
+                        <span
+                          class="text-orange-600"
+                          *ngIf="orderDetailAdmin.payment_method === 'cod'"
+                          >Thanh toán khi nhận hàng</span
+                        >
+                        <span
+                          class="text-emerald-700"
+                          *ngIf="orderDetailAdmin.payment_method === 'other'"
+                          >Các phương thức thanh toán khác</span
+                        ></font
+                      >
+                    </dd>
+                  </div>
+                  <div
+                    class="flex items-center justify-between p-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                  >
+                    <dt class="text-sm font-medium text-slate-900">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Tổng cộng
+                        </font></font
+                      >
+                    </dt>
+                    <dd
+                      class="text-sm font-medium text-slate-900 tabular-nums sm:col-span-2 sm:text-right"
+                    >
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          {{
+                            orderDetailAdmin.total_money
+                              | currency : "VND" : "symbol" : "1.0-0"
+                          }}
+                        </font></font
+                      >
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+            <div class="relative z-50" style="display: none">
+              <div
+                class="fixed inset-0 bg-slate-900/50 backdrop-blur"
+                style="display: none"
+              ></div>
+
+              <div class="fixed inset-0 z-50 overflow-y-auto">
+                <div
+                  class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livewire Component wire-end:AZ4Ez0purpokXkAswUcw -->
+        </div>
+
+        <div class="mt-6 col-span-3 xl:col-span-1 space-y-6 xl:mt-0">
+          <div wire:id="6JGeuOxwEVkQu1SyfMGy">
+            <div
+              class="bg-white shadow-sm ring-1 ring-slate-200 rounded-md sm:rounded-lg"
+            >
+              <div class="px-4 py-5 rounded-t-md sm:px-6 sm:rounded-t-lg">
+                <div
+                  class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap"
+                >
+                  <div class="ml-4 mt-2">
+                    <h3 class="text-base font-medium text-slate-900">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Ghi chú từ khách hàng
+                        </font></font
+                      >
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-5 sm:px-6 -mt-5">
+                <p class="sm:text-sm text-slate-500">
+                  <font style="vertical-align: inherit"
+                    ><font style="vertical-align: inherit">
+                      {{ orderDetailAdmin.note }}
+                    </font></font
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livewire Component wire-end:6JGeuOxwEVkQu1SyfMGy -->
+          <div wire:id="QKORxeOw8d56BwGtROkc">
+            <div
+              class="bg-white shadow-sm ring-1 ring-slate-200 rounded-md sm:rounded-lg"
+            >
+              <div class="px-4 py-5 rounded-t-md sm:px-6 sm:rounded-t-lg">
+                <h3 class="text-base font-medium text-slate-900">
+                  <font style="vertical-align: inherit"
+                    ><font style="vertical-align: inherit">
+                      Khách hàng
+                    </font></font
+                  >
+                </h3>
+              </div>
+              <div class="px-4 py-5 sm:px-6">
+                <div
+                  class="border-t border-slate-200 divide-y divide-slate-200 -mx-4 -m-6 sm:-mx-6"
+                >
+                  <div class="flex items-center p-4 sm:py-5 sm:px-6">
+                    <div class="flex-shrink-0 mr-4">
+                      <img
+                        src="https://cartify.novabolt.dev/img/avatar.svg"
+                        alt="Oren Bosco"
+                        class="h-10 w-10 rounded-full bg-slate-200 object-center object-cover"
+                      />
+                    </div>
+                    <div class="flex justify-between items-center w-full">
+                      <a href="" class="text-sm font-medium hover:text-sky-600"
+                        ><font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit">
+                            {{ orderDetailAdmin.user_id?.fullName }}
+                          </font></font
+                        ></a
+                      >
+                      <svg
+                        class="w-5 h-5 text-slate-400"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="text-sm p-4 sm:py-5 sm:px-6">
+                    <h4 class="font-medium uppercase text-xs">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Thông tin liên lạc
+                        </font></font
+                      >
+                    </h4>
+                    <ul class="mt-3 space-y-1">
+                      <li class="text-black text-sm">
+                        <font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit"
+                            >Email : {{ orderDetailAdmin.email }}</font
+                          ></font
+                        >
+                      </li>
+                      <li class="text-black text-sm">
+                        <font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit">
+                            SĐT : {{ orderDetailAdmin.user_id?.phoneNumber }}
+                          </font></font
+                        >
+                      </li>
+                      <li class="text-black text-sm">
+                        <font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit">
+                            Quê quán : {{ orderDetailAdmin.user_id?.address }}
+                          </font></font
+                        >
+                      </li>
+                      <li class="text-black text-sm">
+                        <font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit">
+                            Sinh nhật :
+                            {{ orderDetailAdmin.user_id?.dateOfBirth }}
+                          </font></font
+                        >
+                      </li>
+                      <li class="text-black text-sm">
+                        <font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit">
+                            Chức năng :
+                            {{ orderDetailAdmin.user_id?.role?.name }}
+                          </font></font
+                        >
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="p-4 sm:py-5 sm:px-6">
+                    <h4 class="font-medium uppercase text-xs">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Địa chỉ giao hàng
+                        </font></font
+                      >
+                    </h4>
+                    <address class="mt-2 not-italic text-sm">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Địa chỉ nhận hàng :
+                          {{ orderDetailAdmin.shipping_address }}
+                        </font></font
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          SĐT nhận hàng :
+                          {{ orderDetailAdmin.phone_number }}</font
+                        ></font
+                      ><br />
+                    </address>
+                  </div>
+
+                  <!-- <div class="p-4 sm:py-5 sm:px-6">
+                    <h4 class="font-medium uppercase text-xs">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Địa chỉ thanh toán
+                        </font></font
+                      >
+                    </h4>
+                    <address class="mt-2 not-italic text-sm">
+                      <font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Bà Cora Trantow
+                        </font></font
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Bernier LLC
+                        </font></font
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          6834 Cummings Place
+                        </font></font
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Port Myahfort n/a
+                        </font></font
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Hoa Kỳ
+                        </font></font
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          +16184221080</font
+                        ></font
+                      ><br />
+                    </address>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livewire Component wire-end:QKORxeOw8d56BwGtROkc -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
