@@ -1,0 +1,40 @@
+.status-container {
+  position: relative;
+  display: inline-block;
+}
+
+.edit-icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.current-status {
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.status-dropdown {
+  display: block;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  z-index: 1;
+}
+
+.status-option {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.status-option:hover {
+  background-color: #f0f0f0;
+}
+
+.status-option.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}

@@ -70,4 +70,21 @@ export class OrderService {
 
     return this.http.get<OrderResponse[]>(this.apiOrder, { params, headers });
   }
+
+  updateStatus(orderId: number, status: string): Observable<any> {
+    debugger;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const params = new HttpParams().set('status', status);
+    return this.http.put(
+      `${this.apiOrder}/status/${orderId}`,
+      {},
+      {
+        headers: headers,
+        params: params,
+      }
+    );
+  }
 }

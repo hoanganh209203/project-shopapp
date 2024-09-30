@@ -7,11 +7,13 @@ import { OrderTypeResponse } from '../../../../interfaces/orderType.response';
 import { environment } from '../../../../environments/environment';
 import { OrderDetail } from '../../../../interfaces/orderDetail.response';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-order-detail-admin',
   standalone: true,
-  imports: [NgClass, NgIf, NgFor, CommonModule, RouterLink],
+  imports: [NgClass, NgIf, NgFor, CommonModule, RouterLink, FormsModule],
   templateUrl: './order-detail-admin.component.html',
   styleUrl: './order-detail-admin.component.scss',
 })
@@ -33,10 +35,11 @@ export class OrderDetailAdminComponent implements OnInit {
     order_detail: [],
   };
   orderId: number = 0;
-
+  dropdownVisible = false;
   constructor(
     private orderService: OrderService,
     private router: Router,
+    private toastr: ToastrService,
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
@@ -50,7 +53,30 @@ export class OrderDetailAdminComponent implements OnInit {
       }
     });
   }
+  onStatusChange(orderId: number, status: string): void {
+    this.updateStatus(orderId, status);
+  }
 
+  updateStatus(orderId: number, status: string): void {
+    this.orderService.updateStatus(orderId, status).subscribe({
+      next: () => {
+        debugger;
+        this.toastr.success('Update status order successfully', 'Products', {
+          timeOut: 2000,
+        });
+        // Cập nhật trạng thái đơn hàng sau khi thành công
+        this.orderDetailAdmin.status = status;
+      },
+      error: () => {
+        this.toastr.error('Failed to update order status', 'Products', {
+          timeOut: 2000,
+        });
+      },
+    });
+  }
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
   getOrderDetailAdmin(orderId: number): void {
     this.orderService.getOrderById(orderId).subscribe({
       next: (response: any) => {

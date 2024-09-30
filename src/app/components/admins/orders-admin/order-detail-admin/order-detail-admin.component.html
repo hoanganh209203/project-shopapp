@@ -52,16 +52,16 @@
                 <div
                   class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap"
                 >
-                  <div class="ml-4 mt-2">
+                  <div class="ml-4 mt-2 flex justify-center items-center gap-2">
                     <h3
                       [ngClass]="{
-                        'text-yellow-700':
+                        'text-yellow-500':
                           orderDetailAdmin.status === 'pending',
-                        'text-blue-700':
+                        'text-blue-800':
                           orderDetailAdmin.status === 'processing',
-                        'text-purple-700':
+                        'text-purple-600':
                           orderDetailAdmin.status === 'shipped',
-                        'text-green-700':
+                        'text-green-600':
                           orderDetailAdmin.status === 'delivered',
                         'text-red-500': orderDetailAdmin.status === 'cancelled'
                       }"
@@ -73,6 +73,66 @@
                         </font></font
                       >
                     </h3>
+                    <div
+                      class="status-container w-40"
+                      (click)="toggleDropdown()"
+                    >
+                      <i class="fas fa-pencil-alt"></i>
+
+                      <div class="status-dropdown" *ngIf="dropdownVisible">
+                        <div
+                          class="status-option text-yellow-500"
+                          (click)="onStatusChange(orderId, 'pending')"
+                          [class.disabled]="
+                            orderDetailAdmin.status === 'pending'
+                          "
+                        >
+                          <i class="fas fa-hourglass-start"></i> Pending
+                        </div>
+
+                        <div
+                          class="status-option text-blue-800"
+                          (click)="onStatusChange(orderId, 'processing')"
+                          [class.disabled]="
+                            orderDetailAdmin.status !== 'pending' &&
+                            orderDetailAdmin.status !== 'processing'
+                          "
+                        >
+                          <i class="fas fa-spinner"></i> Processing
+                        </div>
+
+                        <div
+                          class="status-option text-purple-500"
+                          (click)="onStatusChange(orderId, 'shipped')"
+                          [class.disabled]="
+                            orderDetailAdmin.status !== 'processing'
+                          "
+                        >
+                          <i class="fas fa-truck"></i> Shipped
+                        </div>
+
+                        <div
+                          class="status-option text-green-600"
+                          (click)="onStatusChange(orderId, 'delivered')"
+                          [class.disabled]="
+                            orderDetailAdmin.status !== 'shipped'
+                          "
+                        >
+                          <i class="fas fa-box-open"></i> Delivered
+                        </div>
+
+                        <div
+                          class="status-option text-red-400"
+                          (click)="onStatusChange(orderId, 'cancelled')"
+                          [class.disabled]="
+                            orderDetailAdmin.status !== 'pending' &&
+                            orderDetailAdmin.status !== 'processing'
+                          "
+                        >
+                          <i class="fas fa-ban"></i> Cancelled
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -309,13 +369,17 @@
                   </div>
                 </div>
               </div>
-              <div class="px-4 py-5 sm:px-6 -mt-5">
+              <div
+                class="px-4 py-5 sm:px-6 -mt-5"
+                style="
+                  max-height: 300px;
+                  max-width: 100%;
+                  overflow: auto;
+                  white-space: nowrap;
+                "
+              >
                 <p class="sm:text-sm text-slate-500">
-                  <font style="vertical-align: inherit"
-                    ><font style="vertical-align: inherit">
-                      {{ orderDetailAdmin.note }}
-                    </font></font
-                  >
+                  {{ orderDetailAdmin.note }}
                 </p>
               </div>
             </div>
@@ -381,13 +445,6 @@
                     <ul class="mt-3 space-y-1">
                       <li class="text-black text-sm">
                         <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit"
-                            >Email : {{ orderDetailAdmin.email }}</font
-                          ></font
-                        >
-                      </li>
-                      <li class="text-black text-sm">
-                        <font style="vertical-align: inherit"
                           ><font style="vertical-align: inherit">
                             SĐT : {{ orderDetailAdmin.user_id?.phoneNumber }}
                           </font></font
@@ -421,24 +478,41 @@
 
                   <div class="p-4 sm:py-5 sm:px-6">
                     <h4 class="font-medium uppercase text-xs">
-                      <font style="vertical-align: inherit"
-                        ><font style="vertical-align: inherit">
+                      <font style="vertical-align: inherit">
+                        <br />
+                        <font style="vertical-align: inherit">
                           Địa chỉ giao hàng
                         </font></font
                       >
                     </h4>
                     <address class="mt-2 not-italic text-sm">
                       <font style="vertical-align: inherit"
-                        ><font style="vertical-align: inherit">
-                          Địa chỉ nhận hàng :
-                          {{ orderDetailAdmin.shipping_address }}
+                        ><font style="vertical-align: inherit"
+                          ><font style="vertical-align: inherit"
+                            ><font style="vertical-align: inherit">
+                              Tên người nhận :
+                              {{ orderDetailAdmin.fullname }}</font
+                            ></font
+                          ><br />
+                          <font style="vertical-align: inherit">
+                            Địa chỉ nhận hàng :
+                            {{ orderDetailAdmin.shipping_address }}-</font
+                          ></font
+                        >
+                        <font style="vertical-align: inherit">
+                          {{ orderDetailAdmin.address }}
                         </font></font
                       ><br /><font style="vertical-align: inherit"
                         ><font style="vertical-align: inherit">
                           SĐT nhận hàng :
                           {{ orderDetailAdmin.phone_number }}</font
                         ></font
-                      ><br />
+                      ><br /><font style="vertical-align: inherit"
+                        ><font style="vertical-align: inherit">
+                          Email :
+                          {{ orderDetailAdmin.email }}</font
+                        ></font
+                      >
                     </address>
                   </div>
 
