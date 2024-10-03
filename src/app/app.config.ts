@@ -11,7 +11,9 @@ import { provideRouter } from '@angular/router';
 import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
 import { tokenInterceptor } from './interceptors/tokens/token.interceptor';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 registerLocaleData(uk);
 
@@ -25,6 +27,8 @@ export const appConfig: ApplicationConfig = {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    NgApexchartsModule,
     provideToastr(),
+    provideCharts(withDefaultRegisterables()),
   ],
 };

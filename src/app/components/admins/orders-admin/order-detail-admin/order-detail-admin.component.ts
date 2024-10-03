@@ -5,7 +5,7 @@ import { OrderService } from '../../../../service/orders/order.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { OrderTypeResponse } from '../../../../interfaces/orderType.response';
 import { environment } from '../../../../environments/environment';
-import { OrderDetail } from '../../../../interfaces/orderDetail.response';
+import { OrderDetailType } from '../../../../interfaces/orderDetail.response';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule, NgModel } from '@angular/forms';
@@ -95,7 +95,7 @@ export class OrderDetailAdminComponent implements OnInit {
         this.orderDetailAdmin.order_detail = response.order_detail;
         debugger;
         this.orderDetailAdmin.order_detail = response.order_detail.map(
-          (order_detail: OrderDetail) => {
+          (order_detail: OrderDetailType) => {
             order_detail.product.thumbnail = `${environment.apiBaseUrl}/products/images/${order_detail.product.thumbnail}`;
             return order_detail;
           }

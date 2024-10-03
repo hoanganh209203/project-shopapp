@@ -4,7 +4,7 @@ import { OrderService } from '../../../service/orders/order.service';
 import { Router } from 'express';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { OrderDetail } from '../../../interfaces/orderDetail.response';
+import { OrderDetailType } from '../../../interfaces/orderDetail.response';
 import { environment } from '../../../environments/environment';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 
@@ -16,21 +16,6 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
   styleUrl: './order-user-id.component.scss',
 })
 export class OrderUserIdComponent implements OnInit {
-  // userOrderResponse: UserOrderResponse = {
-  //   id: 0,
-  //   user_id: 0,
-  //   fullname: '',
-  //   phone_number: '',
-  //   email: '',
-  //   address: '',
-  //   note: '',
-  //   status: '',
-  //   total_money: 0,
-  //   shipping_address: '',
-  //   shipping_date: new Date(),
-  //   payment_method: '',
-  //   order_detail: [],
-  // };
   userOrderResponses: UserOrderResponse[] = [];
   orderId: number = 0;
   userId: number = 0;
@@ -67,7 +52,7 @@ export class OrderUserIdComponent implements OnInit {
           (order: UserOrderResponse) => {
             if (order.order_detail) {
               order.order_detail = order.order_detail.map(
-                (orderDetail: OrderDetail) => {
+                (orderDetail: OrderDetailType) => {
                   if (orderDetail.product && orderDetail.product.thumbnail) {
                     orderDetail.product.thumbnail = `${environment.apiBaseUrl}/products/images/${orderDetail.product.thumbnail}`;
                   }

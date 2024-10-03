@@ -1,0 +1,16 @@
+<div class="chart-container mt-10">
+  <div class="summary mb-16 text-xl font-bold border w-96 shadow">
+    <h4>Tổng số lượng đơn hàng: {{ totalOrders }} sản phẩm</h4>
+    <h4>Tổng số tiền: {{ totalRevenue | currency : "VND" }}</h4>
+  </div>
+
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [dataLabels]="chartOptions.dataLabels"
+    [xaxis]="chartOptions.xaxis"
+    [yaxis]="chartOptions.yaxis"
+    [fill]="chartOptions.fill"
+    [title]="chartOptions.title"
+  ></apx-chart>
+</div>

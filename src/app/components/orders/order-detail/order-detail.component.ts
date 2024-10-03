@@ -2,7 +2,7 @@ import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { OrderTypeResponse } from '../../../interfaces/orderType.response';
 import { OrderService } from '../../../service/orders/order.service';
-import { OrderDetail } from '../../../interfaces/orderDetail.response';
+import { OrderDetailType } from '../../../interfaces/orderDetail.response';
 import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -71,17 +71,21 @@ export class OrderDetailComponent implements OnInit {
         this.orderTypeResponse.order_detail = response.order_detail;
 
         this.totalOrderAmount = this.orderTypeResponse.order_detail.reduce(
-          (total, item) => {
-            return total + item.price * item.numberOfProduct;
+          (total, item: OrderDetailType) => {
+            debugger;
+            const totalMoney = item.price * item.numberOfProduct;
+            item.totalMoney = totalMoney; // Tính toán totalMoney cho từng item
+            return total + totalMoney;
           },
           0
         );
 
         console.log('Tổng tiền phải trả:', this.totalOrderAmount);
         this.orderTypeResponse.total_money = this.totalOrderAmount;
+
         debugger;
         this.orderTypeResponse.order_detail = response.order_detail.map(
-          (order_detail: OrderDetail) => {
+          (order_detail: OrderDetailType) => {
             order_detail.product.thumbnail = `${environment.apiBaseUrl}/products/images/${order_detail.product.thumbnail}`;
             return order_detail;
           }
@@ -91,6 +95,20 @@ export class OrderDetailComponent implements OnInit {
           response.order_date[0],
           response.order_date[1] - 1,
           response.order_date[2]
+        );
+
+        this.orderTypeResponse.order_detail.forEach(
+          (orderDetail: OrderDetailType) => {
+            debugger;
+            this.orderService.updateOrderDetail(orderDetail).subscribe({
+              next: () => {
+                console.log('Đã lưu totalMoney cho order_detail:', orderDetail);
+              },
+              error: (error: any) => {
+                console.error('Lỗi khi lưu order_detail:', error);
+              },
+            });
+          }
         );
       },
 

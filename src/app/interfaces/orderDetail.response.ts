@@ -1,10 +1,10 @@
-import { ProductResponse } from "./product.response";
+import { ProductResponse } from './product.response';
 
-export interface OrderDetail {
-  id : number;
-  product:ProductResponse;
-  price:number;
-  numberOfProduct:number;
-  totalMoney:string;
-  color:string
+export interface OrderDetailType {
+  id: number;
+  product: ProductResponse;
+  price: number;
+  numberOfProduct: number;
+  totalMoney: number;
+  color: string;
 }

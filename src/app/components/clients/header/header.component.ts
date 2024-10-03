@@ -96,7 +96,7 @@ export class HeaderComponent implements OnInit, CanActivate {
         this.isDropdownOpen = false;
         break;
       case 2:
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/dashboard']);
         this.isDropdownOpen = false;
         break;
       default:

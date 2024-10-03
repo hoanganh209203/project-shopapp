@@ -27,6 +27,7 @@ import { UserListComponent } from './components/admins/user-admin/user-list/user
 import { authGuard } from './guards/auth.guard';
 import { OrderListComponent } from './components/admins/orders-admin/order-list/order-list.component';
 import { OrderDetailAdminComponent } from './components/admins/orders-admin/order-detail-admin/order-detail-admin.component';
+import { OrderStatisticsComponent } from './components/orders/order-statistics/order-statistics.component';
 
 export const routes: Routes = [
   {
@@ -107,6 +108,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: AdminsComponent,
+      },
+      {
+        path: 'thong-ke',
+        component: OrderStatisticsComponent,
       },
       //admin products
       {

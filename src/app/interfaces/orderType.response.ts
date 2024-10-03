@@ -1,4 +1,4 @@
-import { OrderDetail } from './orderDetail.response';
+import { OrderDetailType } from './orderDetail.response';
 
 export interface OrderTypeResponse {
   id: number;
@@ -15,7 +15,7 @@ export interface OrderTypeResponse {
   shipping_address: string;
   shipping_date: Date | string;
   payment_method: string;
-  order_detail: OrderDetail[];
+  order_detail: OrderDetailType[];
 }
 
 export interface UserType {

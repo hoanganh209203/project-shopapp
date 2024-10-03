@@ -5,8 +5,9 @@ import { Observable } from 'rxjs';
 import { OrderResponse } from '../../interfaces/order.response';
 import { OrderType } from '../../dtos/orders/orders.dto';
 import { OrderTypeResponse } from '../../interfaces/orderType.response';
-import { OrderDetail } from '../../interfaces/orderDetail.response';
 import { UserOrderResponse } from '../../interfaces/userOrder.response';
+import { OrderDetailType } from '../../interfaces/orderDetail.response';
+import { OrderStatisticsDTO } from '../../dtos/orders/order.statistics.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -30,14 +31,32 @@ export class OrderService {
     return this.http.post<any>(this.apiOrder, orderData, { headers });
   }
 
+  updateOrderDetail(orderDetail: OrderDetailType): Observable<any> {
+    return this.http.put(
+      `${this.apiOrder}/order-detail/${orderDetail.id}`,
+      orderDetail
+    );
+  }
+
   getOrderById(orderId: number): Observable<OrderTypeResponse> {
-    return this.http.get<OrderTypeResponse>(`${this.apiOrder}/${orderId}`);
+    const token = localStorage.getItem('access_token');
+
+    // Cấu hình headers bao gồm token
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<OrderTypeResponse>(`${this.apiOrder}/${orderId}`, {
+      headers,
+    });
   }
 
   // Phương thức tính tổng số tiền từ order_detail
   calculateTotalPrice(orderDetails: any[]): number {
-    return orderDetails.reduce((total, detail) => {
-      return total + detail.price * detail.numberOfProduct;
+    return orderDetails.reduce((total, item: OrderDetailType) => {
+      const totalMoney = item.price * item.numberOfProduct;
+      item.totalMoney = totalMoney; // Tính toán totalMoney cho từng item
+      return total + totalMoney;
     }, 0);
   }
 
@@ -49,9 +68,16 @@ export class OrderService {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
+    const token = localStorage.getItem('access_token');
+
+    // Cấu hình headers bao gồm token
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
     return this.http.get<UserOrderResponse[]>(
       `${this.apiOrder}/user/${userId}`,
-      { params }
+      { params, headers }
     );
   }
 
@@ -85,6 +111,30 @@ export class OrderService {
         headers: headers,
         params: params,
       }
+    );
+  }
+
+  // Gọi API để lấy thống kê theo ngày
+  getDailyStatistics(): Observable<OrderStatisticsDTO[]> {
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<OrderStatisticsDTO[]>(
+      `${this.apiOrder}/statistics/daily`,
+      { headers }
+    );
+  }
+
+  // Gọi API để lấy thống kê theo tháng
+  getMonthlyStatistics(): Observable<OrderStatisticsDTO[]> {
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<OrderStatisticsDTO[]>(
+      `${this.apiOrder}/statistics/monthly`,
+      { headers }
     );
   }
 }
